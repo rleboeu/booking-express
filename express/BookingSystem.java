@@ -1,3 +1,7 @@
+/**
+ * Class for bookingSystem adding, removing, etc
+ * @author Andrew Garcia
+ */
 package express;
 import java.util.*;
 
@@ -22,6 +26,6 @@ public class BookingSystem {
 
     }
     public void cancelBooking(RegisteredUser user, BookableEntity entity) {
-        
+
     }
 }
