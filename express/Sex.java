@@ -1,5 +1,10 @@
 package express;
 
+/**
+ * Sex enum
+ * @author rleboeu
+ * @version 1.0.0
+ */
 public enum Sex {
     MALE("M"), FEMALE("F");
 
