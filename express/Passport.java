@@ -8,17 +8,26 @@ import java.util.*;
 public class Passport {
     private String firstName;
     private String lastName;
-    private String dOB;
+    private String DOB;
     private String nationality;
-    private String pOB;
+    private String POB;
     private Sex sex;
     private String dateIssued;
     private String dateExpiration;
     private int passportNum;
-    private ArrayList<String> destinationHistory;
+    private ArrayList<String> destinationHistory = new ArrayList<String>();
 
-    public Passport(String firstNmae, String LastName, String dOB, String nationality, String pOB, 
+    public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
     Sex sex, String dateIssued, String dateExpiration, int passportNum, ArrayList<String> destinationHistory) {
-
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.DOB = DOB;
+        this.nationality = nationality;
+        this.POB = POB;
+        this.sex = sex;
+        this.dateIssued = dateIssued;
+        this.dateExpiration = dateExpiration;
+        this.passportNum = passportNum;
+        this.destinationHistory = destinationHistory;
     }
 }

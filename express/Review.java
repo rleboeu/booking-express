@@ -10,6 +10,8 @@ public class Review {
     private String comments;
 
     public Review(String firstName, double rating, String comments) {
-
+        this.rating = rating;
+        this.firstName = firstName;
+        this.comments = comments;
     }
 }
