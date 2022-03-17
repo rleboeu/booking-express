@@ -23,6 +23,11 @@ public abstract class BookableEntity {
     public void reserve(RegisteredUser user) {
         
     }
+
+    public void cancelReserve(RegisteredUser user) {
+        
+    }
+
     public void addReview(String firstName, double rating, String comments) {
         Review review = new Review(firstName, rating, comments);
         reviews.add(review);
