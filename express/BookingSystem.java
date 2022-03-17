@@ -40,7 +40,7 @@ public class BookingSystem {
             return false;
         }
     }
-
+    
     public void cancelBooking(RegisteredUser user, BookableEntity entity) {
 
     }
