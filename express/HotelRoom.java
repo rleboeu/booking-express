@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * Thomas Ferguson
  */
-public class HotelRoom {
+public class HotelRoom extends BookableEntity {
     private LocalDate availabilityStart;
     private LocalDate availabilityEnd;
     private int numBeds;
