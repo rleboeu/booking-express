@@ -4,7 +4,7 @@ import java.time.*;
 /**
  * Thomas Ferguson
  */
-public class RentalCar {
+public class RentalCar extends BookableEntity {
     private CarStyle style;
     private ArrayList<CarFeature> features;
     private LocalDate startDay;
