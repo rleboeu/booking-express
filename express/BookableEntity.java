@@ -7,7 +7,7 @@ import java.util.*;
 
 public abstract class BookableEntity {
     protected String name;
-    protected UUID uuid;
+    protected UUID uuid = UUID.randomUUID();
     protected double price;
     protected boolean available;
     protected ArrayList<Review> reviews = new ArrayList<Review>();
