@@ -26,7 +26,7 @@ public class BookingSystem {
         availableBookings.remove(booking);
     }
     public void reserveBooking(RegisteredUser user, BookableEntity entity) {
-
+        
     }
     public void cancelBooking(RegisteredUser user, BookableEntity entity) {
 
