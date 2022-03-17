@@ -20,6 +20,18 @@ public class FlightFilter {
     private double review;
 
     public FlightFilter(){
-        
+        this.departureTime = departureTime;
+        this.departureDate = departureDate;
+        this.departureAirportCode = departureAirportCode;
+        this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
+        this.arrivalAirportCode = arrivalAirportCode;
+        this.flightPriceMax = flightPriceMax;
+        this.numberOfLayovers = numberOfLayovers;
+        this.totalLayoverTime = totalLayoverTime;
+        this.totalFlightTime = totalFlightTime;
+        this.seatType = seatType;
+        this.airline = airline;
+        this.review = review;
     }
 }

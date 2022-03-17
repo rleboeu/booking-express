@@ -13,6 +13,10 @@ public class HotelFilter {
     private String location;
 
     public HotelFilter(){
-
+        arrivalDate = new LocalDate(2022, 03, 17);
+        departureDate = LocalDate.now();
+        price = 0.0;
+        reviews = 0.0;
+        location = "No Location";
     }
 }

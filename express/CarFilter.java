@@ -12,7 +12,12 @@ public class CarFilter {
     private String location;
 
     public CarFilter(){
-
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.carPriceMax = carPriceMax;
+        this.review = review;
+        this.style = style;
+        this.location = location;
     }
     
 }

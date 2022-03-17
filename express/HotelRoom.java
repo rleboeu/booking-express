@@ -9,7 +9,9 @@ public class HotelRoom {
     private LocalDate availabilityEnd;
     private int numBeds;
 
-    public HotelRoom(LocalDate availabilityStart, LocalDate avaibilityend, ArrayList<Review> reviews){
-
+    public HotelRoom(LocalDate availabilityStart, LocalDate availabilityend, ArrayList<Review> reviews){
+        this.availabilityStart = availabilityStart;
+        this.availabilityEnd = availabilityEnd;
+        this.availability
     }
 }
