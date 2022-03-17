@@ -16,7 +16,19 @@ public class Passport {
     private String dateExpiration;
     private int passportNum;
     private ArrayList<String> destinationHistory = new ArrayList<String>();
-
+/**
+ * Contructor for Passport
+ * @param firstName first name of person passport
+ * @param lastName last name of person passport
+ * @param DOB date of birth of person
+ * @param nationality nationality of person
+ * @param POB place of birth of person
+ * @param sex sex of person
+ * @param dateIssued date passport issued
+ * @param dateExpiration date passport expired
+ * @param passportNum passport number
+ * @param destinationHistory destination history on passport
+ */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
     Sex sex, String dateIssued, String dateExpiration, int passportNum, ArrayList<String> destinationHistory) {
         this.firstName = firstName;
