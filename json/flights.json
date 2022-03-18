@@ -1,3 +1,45 @@
 [
-    
+    {
+        "id": "b47fc1f5-6279-46b0-8e49-f4a330a97f71",
+        "departureTime": "18:20:00",
+        "arrivalTime": "21:00:00",
+        "departureCode": 343,
+        "arrivalCode": 324,
+        "totalSeats": 100,
+        "seatsAvailable": 48,
+        "price": 340.00,
+        "available": true,
+        "reviews": [
+            {
+                "rating": 4.5,
+                "firstName": "Arnold",
+                "comments": "Nice flight!"
+            },{
+                "rating": 2.3,
+                "firstName": "Joe",
+                "comments": "They ran out of peanuts in coach."
+            }
+        ]
+    },{
+        "id": "afb3288c-4e00-43a1-a541-a73aeba9784f",
+        "departureTime": "13:15:00",
+        "arrivalTime": "18:00:00",
+        "departureCode": 633,
+        "arrivalCode": 924,
+        "totalSeats": 250,
+        "seatsAvailable": 32,
+        "price": 340.00,
+        "available": true,
+        "reviews": [
+            {
+                "rating": 4.5,
+                "firstName": "Jimmy",
+                "comments": "Nice flight!"
+            },{
+                "rating": 2.3,
+                "firstName": "Norbert",
+                "comments": "They ran out of air in coach."
+            }
+        ]
+    }
 ]

@@ -1,3 +1,23 @@
 [
-    
+    {
+        "id": "196f5225-3ab5-4d81-b264-e2ddf65b699b",
+        "username": "rleboeu",
+        "password": "yourmomdumb58",
+        "firstName": "Ryan",
+        "lastName": "LeBoeuf",
+        "age": 22,
+        "allowedToBook": true,
+        "bookingHistory": [ "b47fc1f5-6279-46b0-8e49-f4a330a97f71" ],
+        "passports": [ "fff1f6cf-f15d-4e80-b867-3eecdb858d92", "f2390156-00c6-4f4b-80a6-b4f3d8bd206f" ]
+    },{
+        "id": "c468b0c2-be1a-4d3d-9992-b5c3b75b1e33",
+        "username": "warmachine68",
+        "password": "warmachinerox",
+        "firstName": "James",
+        "lastName": "Rhodes",
+        "age": 32,
+        "allowedToBook": true,
+        "bookingHistory": [  ],
+        "passports": [  ]
+    }
 ]
