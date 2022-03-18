@@ -6,6 +6,7 @@ package express;
 import java.util.*;
 
 public class Passport {
+    private UUID id;
     private String firstName;
     private String lastName;
     private String DOB;
@@ -31,6 +32,7 @@ public class Passport {
  */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
     Sex sex, String dateIssued, String dateExpiration, int passportNum, ArrayList<String> destinationHistory) {
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.DOB = DOB;
