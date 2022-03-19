@@ -2,6 +2,8 @@ package express;
 
 /**
  * Data constants for DataHandler
+ * @author rleboeu
+ * @version 1.0.0
  */
 public abstract class DataConstants {
     
