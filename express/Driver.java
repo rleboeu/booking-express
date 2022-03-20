@@ -7,8 +7,14 @@ package express;
  */
 public class Driver {
 
-    public static void nain(String[] args) {
+    public static void main(String[] args) {
+        Driver driver = new Driver();
+        driver.run();
+    }
 
+    public void run() {
+        ConsoleBookingExpress consoleBookingExpress = ConsoleBookingExpress.getInstantsConsoleBookingExpress();
+        consoleBookingExpress.mainMenu();
     }
     
 }

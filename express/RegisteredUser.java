@@ -60,6 +60,7 @@ public class RegisteredUser extends User {
      * @param booking BookableEntity to be added
      */
     public void addBooking(BookableEntity booking) {
+        bookingHistory.add(booking);
 
     }
 
@@ -68,7 +69,7 @@ public class RegisteredUser extends User {
      * @param booking BookableEntity to be removed
      */
     public void removeBooking(BookableEntity booking) {
-
+        bookingHistory.remove(booking);
     }
 
     /**
@@ -76,7 +77,7 @@ public class RegisteredUser extends User {
      * @param passport Passport to be added
      */
     public void addPassport(Passport passport) {
-
+        passports.add(passport);
     }
 
     /**
@@ -84,7 +85,7 @@ public class RegisteredUser extends User {
      * @param passport Passport to be removed
      */
     public void removePassport(Passport passport) {
-
+        passports.remove(passport);
     }
     
 }

@@ -15,7 +15,7 @@ public class Passport {
     private Sex sex;
     private String dateIssued;
     private String dateExpiration;
-    private int passportNum;
+    private String passportNum;
     private ArrayList<String> destinationHistory = new ArrayList<String>();
 /**
  * Contructor for Passport
@@ -31,7 +31,7 @@ public class Passport {
  * @param destinationHistory destination history on passport
  */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
-    Sex sex, String dateIssued, String dateExpiration, int passportNum, ArrayList<String> destinationHistory) {
+    Sex sex, String dateIssued, String dateExpiration, String passportNum, ArrayList<String> destinationHistory) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;

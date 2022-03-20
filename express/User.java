@@ -25,7 +25,7 @@ public class User {
      * @return The RegisteredUser account
      */
     public RegisteredUser createAccoutn(String name, String lastName, int age) {
-        return null;
+        return new RegisteredUser(name,lastName,age, location);
     }
     
 }
