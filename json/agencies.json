@@ -1,3 +1,12 @@
 [
-    
+    {
+        "name": "Motel 6",
+        "bookings": [ "76b35cab-5a9e-4200-8cec-51f2316124e1" ]
+    },{
+        "name": "Delta",
+        "bookings": [ "b47fc1f5-6279-46b0-8e49-f4a330a97f71", "afb3288c-4e00-43a1-a541-a73aeba9784f" ]
+    },{
+        "name": "Express Rentals",
+        "bookings": [ "64c28297-05f0-44eb-b2b5-4303275b12b5" ]
+    }
 ]

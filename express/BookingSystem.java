@@ -25,9 +25,22 @@ public class BookingSystem {
     public void removeBooking(BookableEntity booking) {
         availableBookings.remove(booking);
     }
-    public void reserveBooking(RegisteredUser user, BookableEntity entity) {
-
+    /**
+     * Attempts to reserve booking for the user 
+     * @param user to reserve booking for
+     * @param entity to reserve for the user
+     * @return boolean is successfull in booking
+     */
+    public boolean reserveBooking(RegisteredUser user, BookableEntity entity) {
+        if (entity.isAvailable()) {
+            entity.reserve(user);
+            // JSON stuff
+            return true;
+        } else {
+            return false;
+        }
     }
+    
     public void cancelBooking(RegisteredUser user, BookableEntity entity) {
 
     }

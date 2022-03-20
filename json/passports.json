@@ -1,3 +1,25 @@
 [
-    
+    {
+        "id": "fff1f6cf-f15d-4e80-b867-3eecdb858d92",
+        "firstName": "Ryan",
+        "lastName": "LeBoeuf",
+        "dateOfBirth": "01/20/2000",
+        "nationality": "American",
+        "placeOfBirth": "USA",
+        "sex": "M",
+        "dateIssued": "01/20/2018",
+        "dateExpiration": "01/20/2024",
+        "destinationHistory": [ "USA", "Russia", "Scotland" ]
+    },{
+        "id": "f2390156-00c6-4f4b-80a6-b4f3d8bd206f",
+        "firstName": "Roman",
+        "lastName": "Royce",
+        "dateOfBirth": "04/21/2001",
+        "nationality": "American",
+        "placeOfBirth": "USA",
+        "sex": "M",
+        "dateIssued": "04/21/2019",
+        "dateExpiration": "04/21/2025",
+        "destinationHistory": [ "USA", "Russia", "Scotland", "Bermuda", "Bahama", "Key Largo", "Montego" ]
+    }
 ]

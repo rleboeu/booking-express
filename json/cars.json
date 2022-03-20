@@ -1,3 +1,20 @@
 [
-    
+    {
+        "id": "64c28297-05f0-44eb-b2b5-4303275b12b5",
+        "name": "Honda Civic 2009",
+        "price": 350,
+        "style": "SEDAN_2_DOOR",
+        "features": [ "SPORTS_SEATS", "WINDOW_TINT", "HEATED_SEATS", "HIGH_END_SOUND" ],
+        "startDay": "02/28/2022",
+        "endDay": "03/05/2022",
+        "numSeats": 2,
+        "available": true,
+        "reviews": [
+            {
+                "rating": 5.0,
+                "firstName": "Legend",
+                "comments": "So glad it's not an electric car. Screw the trees!"
+            }
+        ]
+    }
 ]
