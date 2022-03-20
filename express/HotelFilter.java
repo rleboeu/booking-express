@@ -1,5 +1,5 @@
 package express;
-import java.time.*;
+import java.time.LocalDate;
 /**
  * Thomas Ferguson
  */
@@ -13,7 +13,8 @@ public class HotelFilter {
     private String location;
 
     public HotelFilter(){
-        arrivalDate = new LocalDate(2022, 03, 17);
+        LocalDate arrivalDate = LocalDate.of(2022, 03, 17);
+        LocalDate departureDate = LocalDate.of(2022, 03, 17);
         departureDate = LocalDate.now();
         price = 0.0;
         reviews = 0.0;
