@@ -9,9 +9,9 @@ public class HotelRoom extends BookableEntity {
     private LocalDate availabilityEnd;
     private int numBeds;
 
-    public HotelRoom(LocalDate availabilityStart, LocalDate availabilityend, ArrayList<Review> reviews){
+    public HotelRoom(LocalDate availabilityStart, LocalDate availabilityEnd, ArrayList<Review> reviews){
         this.availabilityStart = availabilityStart;
         this.availabilityEnd = availabilityEnd;
-        this.availability
+        this.numBeds = numBeds;
     }
 }
