@@ -11,6 +11,7 @@ public class HotelFilter {
     private double price;
     private double reviews;
     private String location;
+    private int cheese;
 
     public HotelFilter(){
         LocalDate arrivalDate = LocalDate.of(2022, 03, 17);
@@ -19,5 +20,6 @@ public class HotelFilter {
         price = 0.0;
         reviews = 0.0;
         location = "No Location";
+        
     }
 }
