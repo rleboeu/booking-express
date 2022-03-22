@@ -3,6 +3,8 @@
  * @author Andrew Garcia
  */
 package express;
+import java.time.LocalDate;
+import java.time.format.*;
 import java.util.*;
 
 public class Passport {
@@ -15,7 +17,7 @@ public class Passport {
     private Sex sex;
     private String dateIssued;
     private String dateExpiration;
-    private String passportNum;
+    public static DateTimeFormatter dateFormatter;
     private ArrayList<String> destinationHistory = new ArrayList<String>();
 /**
  * Contructor for Passport
@@ -27,7 +29,6 @@ public class Passport {
  * @param sex sex of person
  * @param dateIssued date passport issued
  * @param dateExpiration date passport expired
- * @param passportNum passport number
  * @param destinationHistory destination history on passport
  */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
@@ -41,12 +42,19 @@ public class Passport {
         this.sex = sex;
         this.dateIssued = dateIssued;
         this.dateExpiration = dateExpiration;
-        this.passportNum = passportNum;
         this.destinationHistory = destinationHistory;
     }
+/**
+ * checks if dateExpiration is valid
+ * @return if date is valid
+ */
     public boolean isValid() {
+        try{
+            LocalDate.parse(dateExpiration, this.dateFormatter);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
         return true;
-        //what am i validating?
     }
 /**
  * return tostring of passport information
@@ -55,12 +63,9 @@ public class Passport {
         return id + " " + firstName + " " + lastName + " " + DOB + " " + DOB + " " + nationality + 
         " " + POB + " " + sex + " " + dateIssued + " " + dateExpiration + " " + passportNum + " " + destinationHistory;
     }
-    
+   
     public UUID getId() {
         return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
     }
     public String getFirstName() {
         return firstName;
@@ -77,23 +82,11 @@ public class Passport {
     public String getDOB() {
         return DOB;
     }
-    public void setDOB(String dOB) {
-        DOB = dOB;
-    }
     public String getNationality() {
         return nationality;
     }
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
     public String getPOB() {
         return POB;
-    }
-    public void setPOB(String pOB) {
-        POB = pOB;
-    }
-    public Sex getSex() {
-        return sex;
     }
     public void setSex(Sex sex) {
         this.sex = sex;
@@ -110,16 +103,10 @@ public class Passport {
     public void setDateExpiration(String dateExpiration) {
         this.dateExpiration = dateExpiration;
     }
-    public String getPassportNum() {
-        return passportNum;
-    }
-    public void setPassportNum(String passportNum) {
-        this.passportNum = passportNum;
-    }
     public ArrayList<String> getDestinationHistory() {
         return destinationHistory;
     }
-    public void setDestinationHistory(ArrayList<String> destinationHistory) {
-        this.destinationHistory = destinationHistory;
+    public void addDestinationHis(String destination) {
+        destinationHistory.add(destination);
     }
 }
