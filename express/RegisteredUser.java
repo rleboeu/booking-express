@@ -1,6 +1,7 @@
 package express;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 /**
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  */
 public class RegisteredUser extends User {
 
+    private UUID id;
     private String firstName;
     private String lastName;
     private int age;
@@ -29,9 +31,10 @@ public class RegisteredUser extends User {
      * @param bookingHistory ArrayList<BookableEntity>
      * @param location String
      */
-    public RegisteredUser(String firstName, String lastName, int age, boolean allowedToBook,
+    public RegisteredUser(UUID id, String firstName, String lastName, int age, boolean allowedToBook,
             ArrayList<Passport> passports, int numFlightsCurrentYear, ArrayList<BookableEntity> bookingHistory, String location) {
         super(location);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -50,6 +53,7 @@ public class RegisteredUser extends User {
      */
     public RegisteredUser(String firstName, String lastName, int age, String location) {
         super(location);
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
