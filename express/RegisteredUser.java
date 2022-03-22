@@ -32,7 +32,7 @@ public class RegisteredUser extends User {
      * @param location String
      */
     public RegisteredUser(UUID id, String firstName, String lastName, int age, boolean allowedToBook,
-            ArrayList<Passport> passports, int numFlightsCurrentYear, ArrayList<BookableEntity> bookingHistory, String location) {
+            ArrayList<Passport> passports, ArrayList<BookableEntity> bookingHistory, String location) {
         super(location);
         this.id = id;
         this.firstName = firstName;
@@ -40,7 +40,6 @@ public class RegisteredUser extends User {
         this.age = age;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
-        this.numFlightsCurrentYear = numFlightsCurrentYear;
         this.bookingHistory = bookingHistory;
     }
 
