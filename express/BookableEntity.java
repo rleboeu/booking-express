@@ -33,7 +33,10 @@ public abstract class BookableEntity {
     public void reserve(RegisteredUser user) {
         
     }
-
+/**
+ * Cancel entity for user
+ * @param user user
+ */
     public void cancelReserve(RegisteredUser user) {
         
     }
