@@ -61,7 +61,7 @@ public class Passport {
  */
     public String toString() {
         return id + " " + firstName + " " + lastName + " " + DOB + " " + DOB + " " + nationality + 
-        " " + POB + " " + sex + " " + dateIssued + " " + dateExpiration + " " + passportNum + " " + destinationHistory;
+        " " + POB + " " + sex + " " + dateIssued + " " + dateExpiration + " " + destinationHistory;
     }
    
     public UUID getId() {
