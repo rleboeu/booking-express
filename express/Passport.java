@@ -44,4 +44,82 @@ public class Passport {
         this.passportNum = passportNum;
         this.destinationHistory = destinationHistory;
     }
+    public boolean isValid() {
+        return true;
+        //what am i validating?
+    }
+/**
+ * return tostring of passport information
+ */
+    public String toString() {
+        return id + " " + firstName + " " + lastName + " " + DOB + " " + DOB + " " + nationality + 
+        " " + POB + " " + sex + " " + dateIssued + " " + dateExpiration + " " + passportNum + " " + destinationHistory;
+    }
+    
+    public UUID getId() {
+        return id;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getDOB() {
+        return DOB;
+    }
+    public void setDOB(String dOB) {
+        DOB = dOB;
+    }
+    public String getNationality() {
+        return nationality;
+    }
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+    public String getPOB() {
+        return POB;
+    }
+    public void setPOB(String pOB) {
+        POB = pOB;
+    }
+    public Sex getSex() {
+        return sex;
+    }
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+    public String getDateIssued() {
+        return dateIssued;
+    }
+    public void setDateIssued(String dateIssued) {
+        this.dateIssued = dateIssued;
+    }
+    public String getDateExpiration() {
+        return dateExpiration;
+    }
+    public void setDateExpiration(String dateExpiration) {
+        this.dateExpiration = dateExpiration;
+    }
+    public String getPassportNum() {
+        return passportNum;
+    }
+    public void setPassportNum(String passportNum) {
+        this.passportNum = passportNum;
+    }
+    public ArrayList<String> getDestinationHistory() {
+        return destinationHistory;
+    }
+    public void setDestinationHistory(ArrayList<String> destinationHistory) {
+        this.destinationHistory = destinationHistory;
+    }
 }
