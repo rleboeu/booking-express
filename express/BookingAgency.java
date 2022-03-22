@@ -7,16 +7,16 @@ import java.util.*;
 
 public class BookingAgency {
     String name;
-    ArrayList<BookableEntity> bookings = new ArrayList<BookableEntity>();
+    ArrayList<String> bookingIds = new ArrayList<String>();
     
 /**
  * Contructor for booking Agency
  * @param name name of booking agency
  * @param bookings bookings in agency
  */
-    public BookingAgency(String name, ArrayList<BookableEntity> bookings) {
+    public BookingAgency(String name, ArrayList<String> bookings) {
         this.name = name;
-        this.bookings = bookings;
+        this.bookingIds = bookings;
     }
 /**
  * Contructor for booking agency
@@ -27,17 +27,17 @@ public class BookingAgency {
     }
 /**
  * Adds booking to booking agency
- * @param booking bookings in list
+ * @param bookingId booking in list
  */
-    public void addBooking(BookableEntity booking) {
-        bookings.add(booking);
+    public void addBooking(String bookingId) {
+        bookingIds.add(bookingId);
     }
 /**
  * Removes booking from agency
- * @param booking bookings in list
+ * @param bookingId booking in list
  */
-    public void removeBooking(BookableEntity booking) {
-        bookings.remove(booking);
+    public void removeBooking(String bookingId) {
+        bookingIds.remove(bookingId);
     }
     
     /**
@@ -58,17 +58,10 @@ public class BookingAgency {
     
     /**
      * Accessor for agency's bookings
-     * @return ArrayList<BookableEntity> bookings
+     * @return ArrayList<String> booking ids
      */
-    public ArrayList<BookableEntity> getBookings() {
-        return bookings;
+    public ArrayList<String> getBookings() {
+        return bookingIds;
     }
 
-    /**
-     * Mutator for bookings list
-     * @param bookings new list
-     */
-    public void setBookings(ArrayList<BookableEntity> bookings) {
-        this.bookings = bookings;
-    }
 }
