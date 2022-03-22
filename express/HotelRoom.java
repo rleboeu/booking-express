@@ -35,23 +35,12 @@ public LocalDate getAvailabilityEnd() {
 public void setAvailabilityEnd(LocalDate availabilityEnd) {
     this.availabilityEnd = availabilityEnd;
 }
-public int getNumBeds() {
-    return numBeds;
-}
-public void setNumBeds(int numBeds) {
-    this.numBeds = numBeds;
-}
-public int getNearAirportCode() {
-    return nearAirportCode;
-}
-public void setNearAirportCode(int nearAirportCode) {
-    this.nearAirportCode = nearAirportCode;
-}
+
 public ArrayList<Review> getReviews() {
     return reviews;
 }
-public void setReviews(ArrayList<Review> reviews) {
-    this.reviews = reviews;
+public void addReviews(Review review) {
+    reviews.add(review);
 }
     
 }
