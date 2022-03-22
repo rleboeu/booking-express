@@ -7,18 +7,15 @@ import java.util.*;
 
 public class BookingAgency {
     String name;
-    String AirportCode;
     ArrayList<BookableEntity> bookings = new ArrayList<BookableEntity>();
     
 /**
  * Contructor for booking Agency
  * @param name name of booking agency
- * @param AirportCode airport code 
  * @param bookings bookings in agency
  */
-    public BookingAgency(String name, String AirportCode, ArrayList<BookableEntity> bookings) {
+    public BookingAgency(String name, ArrayList<BookableEntity> bookings) {
         this.name = name;
-        this.AirportCode = AirportCode;
         this.bookings = bookings;
     }
 /**
@@ -42,28 +39,35 @@ public class BookingAgency {
     public void removeBooking(BookableEntity booking) {
         bookings.remove(booking);
     }
-/**
- * returns toString of booking agency
- */
-    public String toString() {
-        return name + " " + AirportCode + " " + bookings;
-    }
     
+    /**
+     * Accessor for agency name
+     * @return String name
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Mutator for agency name
+     * @param name of agenc
+     */
     public void setName(String name) {
         this.name = name;
     }
-    public String getAirportCode() {
-        return AirportCode;
-    }
-    public void setAirportCode(String airportCode) {
-        AirportCode = airportCode;
-    }
+    
+    /**
+     * Accessor for agency's bookings
+     * @return ArrayList<BookableEntity> bookings
+     */
     public ArrayList<BookableEntity> getBookings() {
         return bookings;
     }
+
+    /**
+     * Mutator for bookings list
+     * @param bookings new list
+     */
     public void setBookings(ArrayList<BookableEntity> bookings) {
         this.bookings = bookings;
     }
