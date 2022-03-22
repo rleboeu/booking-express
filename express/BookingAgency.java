@@ -42,4 +42,29 @@ public class BookingAgency {
     public void removeBooking(BookableEntity booking) {
         bookings.remove(booking);
     }
+/**
+ * returns toString of booking agency
+ */
+    public String toString() {
+        return name + " " + AirportCode + " " + bookings;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getAirportCode() {
+        return AirportCode;
+    }
+    public void setAirportCode(String airportCode) {
+        AirportCode = airportCode;
+    }
+    public ArrayList<BookableEntity> getBookings() {
+        return bookings;
+    }
+    public void setBookings(ArrayList<BookableEntity> bookings) {
+        this.bookings = bookings;
+    }
 }

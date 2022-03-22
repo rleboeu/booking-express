@@ -19,4 +19,29 @@ public class Review {
         this.firstName = firstName;
         this.comments = comments;
     }
+/**
+ * returns toString of rating contents
+ */
+    public String toString() {
+        return rating + " " + firstName + " " + comments;
+    }
+    
+    public double getRating() {
+        return rating;
+    }
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getComments() {
+        return comments;
+    }
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }
