@@ -58,7 +58,7 @@ public class BookingSystem {
     public boolean reserveBooking(RegisteredUser user, BookableEntity entity) {
         if (entity.isAvailable()) {
             entity.reserve();   // modify the entity
-            user.addBooking(entity);    // modifty the user
+            user.addBooking(entity.getUUID().toString());    // modifty the user
             
             DataHandler.saveEntity(entity); // update the database
             DataHandler.saveUser(user); // update the database
@@ -77,7 +77,7 @@ public class BookingSystem {
     public void cancelBooking(RegisteredUser user, BookableEntity entity) {
         if (!entity.isAvailable()) {
             entity.cancelReserve();
-            user.removeBooking(entity);
+            user.removeBooking(entity.getUUID().toString());
 
             DataHandler.saveEntity(entity);
             DataHandler.saveUser(user);
