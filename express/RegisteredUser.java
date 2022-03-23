@@ -60,8 +60,9 @@ public class RegisteredUser extends User {
      * @param booking BookableEntity to be added
      */
     public void addBooking(BookableEntity booking) {
-        bookingHistory.add(booking);
-
+        if (allowedToBook) {
+            this.bookingHistory.add(booking);
+        }
     }
 
     /**
@@ -88,4 +89,9 @@ public class RegisteredUser extends User {
         passports.remove(passport);
     }
     
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName + ", Age: " + this.age;
+    }
+
 }
