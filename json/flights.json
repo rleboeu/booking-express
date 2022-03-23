@@ -5,10 +5,17 @@
         "arrivalTime": "21:00:00",
         "departureCode": 343,
         "arrivalCode": 324,
-        "totalSeats": 100,
-        "seatsAvailable": 48,
         "price": 340.00,
-        "available": true,
+        "seatMap": [
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true],
+                [true, true, true, true, true, true] ],
         "reviews": [
             {
                 "rating": 4.5,
@@ -26,10 +33,17 @@
         "arrivalTime": "18:00:00",
         "departureCode": 633,
         "arrivalCode": 924,
-        "totalSeats": 250,
-        "seatsAvailable": 32,
         "price": 340.00,
-        "available": true,
+        "seatMap": [
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true],
+            [true, true, true, true, true, true] ],
         "reviews": [
             {
                 "rating": 4.5,
