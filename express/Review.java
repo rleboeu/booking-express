@@ -25,22 +25,45 @@ public class Review {
     public String toString() {
         return rating + " " + firstName + " " + comments;
     }
-    
+/**
+ * Returns rating
+ * @return rating of review
+ */
     public double getRating() {
         return rating;
     }
+/**
+ * Sets rating
+ * @param rating rating of review
+ */
     public void setRating(double rating) {
         this.rating = rating;
     }
+/**
+ * Returns first name of review writer
+ * @return first name
+ */
     public String getFirstName() {
         return firstName;
     }
+/**
+ * Set first name
+ * @param firstName first name
+ */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+/**
+ * Get comment on review
+ * @return comment on review
+ */
     public String getComments() {
         return comments;
     }
+/**
+ * Set comment of review
+ * @param comments comment on review
+ */
     public void setComments(String comments) {
         this.comments = comments;
     }

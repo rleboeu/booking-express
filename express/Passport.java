@@ -63,49 +63,108 @@ public class Passport {
         return id + " " + firstName + " " + lastName + " " + DOB + " " + DOB + " " + nationality + 
         " " + POB + " " + sex + " " + dateIssued + " " + dateExpiration + " " + destinationHistory;
     }
-   
+/**
+ * Return uuid of person
+ * @return id
+ */
     public UUID getId() {
         return id;
     }
+/**
+ * Return first name of person
+ * @return first name
+ */
     public String getFirstName() {
         return firstName;
     }
+/**
+ * Set first name of person
+ * @param firstName first name of person
+ */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+/**
+ * Return last name of person
+ * @return last name of person
+ */
     public String getLastName() {
         return lastName;
     }
+/**
+ * Sets last name of person
+ * @param lastName last name of person
+ */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+/**
+ * Date of birth of person
+ * @return date of birth 
+ */
     public String getDOB() {
         return DOB;
     }
+/**
+ * Return nationality of person
+ * @return nationality
+ */
     public String getNationality() {
         return nationality;
     }
+/**
+ * Return place of birth of person
+ * @return place of birth 
+ */
     public String getPOB() {
         return POB;
     }
+/**
+ * Sex of person
+ * @param sex sex of person
+ */
     public void setSex(Sex sex) {
         this.sex = sex;
     }
+/**
+ * Return date passport issued
+ * @return date issued
+ */
     public String getDateIssued() {
         return dateIssued;
     }
+/**
+ * Sets date passport issued
+ * @param dateIssued date issued
+ */
     public void setDateIssued(String dateIssued) {
         this.dateIssued = dateIssued;
     }
+/**
+ * Return date passport expires
+ * @return expiration date
+ */
     public String getDateExpiration() {
         return dateExpiration;
     }
+/**
+ * Set date passport expires
+ * @param dateExpiration expiration date
+ */
     public void setDateExpiration(String dateExpiration) {
         this.dateExpiration = dateExpiration;
     }
+/**
+ * Return passport/person destination history 
+ * @return
+ */
     public ArrayList<String> getDestinationHistory() {
         return destinationHistory;
     }
+/**
+ * Adds destination to destination history
+ * @param destination place person has been
+ */
     public void addDestinationHis(String destination) {
         destinationHistory.add(destination);
     }
