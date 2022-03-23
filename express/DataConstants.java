@@ -7,6 +7,14 @@ package express;
  */
 public abstract class DataConstants {
     
+    // Constants for filepaths
+    protected static final String FILEPATH_FLIGHTS = "json/flights.json";
+    protected static final String FILEPATH_CARS = "json/cars.json";
+    protected static final String FILEPATH_HOTELS = "json/hotelrooms.json";
+    protected static final String FILEPATH_AGENCIES = "json/agencies.json";
+    protected static final String FILEPATH_USERS = "json/users.json";
+    protected static final String FILEPATH_PASSPORTS = "json/passports.json";
+
     // Constants common to more than one JSON file
     protected static final String ID = "id";
     protected static final String FIRST_NAME = "firstName";
