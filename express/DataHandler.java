@@ -17,8 +17,8 @@ import org.json.simple.parser.ParseException;
  */
 public final class DataHandler extends DataConstants {
     
-    private static JSONParser parser;
-
+    private static JSONParser parser = new JSONParser();
+    
     /**
      * Replaces the corresponding data in the JSON file with the parameter's data. 
      * If no JSON object exists with entity's UUID, a new JSON object will be created and saved.
@@ -54,44 +54,38 @@ public final class DataHandler extends DataConstants {
      */
     public static RegisteredUser loadUser(String username, String password) {
         RegisteredUser user = null;
-        DataHandler.parser = new JSONParser();
 
-        try {
-            JSONArray jsonUsers = (JSONArray) (DataHandler.parser.parse(new FileReader("json/users.json")));
-            JSONObject jsonUser = null;
-            String jsonUsername = null;
-            String jsonPassword = null;
+        JSONArray jsonUsers = DataHandler.createJsonArray(DataConstants.FILEPATH_USERS);
+        JSONObject jsonUser = null;
+        String jsonUsername = null;
+        String jsonPassword = null;
 
-            // for each user in users.json
-            for (Object jsonObj : jsonUsers) {
-                jsonUser = (JSONObject) jsonObj;
+        // for each user in users.json
+        for (Object jsonObj : jsonUsers) {
+            jsonUser = (JSONObject) jsonObj;
 
-                jsonUsername = (String) jsonUser.get(DataConstants.USER_USERNAME);
-                jsonPassword = (String) jsonUser.get(DataConstants.USER_PASSWORD);
+            jsonUsername = (String) jsonUser.get(DataConstants.USER_USERNAME);
+            jsonPassword = (String) jsonUser.get(DataConstants.USER_PASSWORD);
 
-                if (jsonUsername.equals(username) && jsonPassword.equals(password)) {
-                    break;  // user found
-                }
+            if (jsonUsername.equals(username) && jsonPassword.equals(password)) {
+                break;  // user found
             }
-
-            // load the RegisteredUser
-            UUID loadId = UUID.fromString( (String) jsonUser.get(DataConstants.ID) );
-            String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
-            String loadLastName = (String) jsonUser.get(DataConstants.LAST_NAME);
-            int loadAge = (Integer) jsonUser.get(DataConstants.USER_AGE);
-            boolean loadAllowed = (Boolean) jsonUser.get(DataConstants.USER_ALLOWED_TO_BOOK);
-            
-            JSONArray jsonHistory = (JSONArray) jsonUser.get(DataConstants.USER_BOOKING_HISTORY);
-            JSONArray jsonPassports = (JSONArray) jsonUser.get(DataConstants.USER_PASSPORTS);
-
-            ArrayList<String> loadBookingHistory = DataHandler.jsonArrayToList(jsonHistory);
-            ArrayList<String> loadPassports = DataHandler.jsonArrayToList(jsonPassports);
-
-            user = new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, loadPassports, loadBookingHistory, "");
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
+
+        // load the RegisteredUser
+        UUID loadId = UUID.fromString( (String) jsonUser.get(DataConstants.ID) );
+        String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
+        String loadLastName = (String) jsonUser.get(DataConstants.LAST_NAME);
+        int loadAge = (Integer) jsonUser.get(DataConstants.USER_AGE);
+        boolean loadAllowed = (Boolean) jsonUser.get(DataConstants.USER_ALLOWED_TO_BOOK);
+        
+        JSONArray jsonHistory = (JSONArray) jsonUser.get(DataConstants.USER_BOOKING_HISTORY);
+        JSONArray jsonPassports = (JSONArray) jsonUser.get(DataConstants.USER_PASSPORTS);
+
+        ArrayList<String> loadBookingHistory = DataHandler.jsonArrayToList(jsonHistory);
+        ArrayList<String> loadPassports = DataHandler.jsonArrayToList(jsonPassports);
+
+        user = new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, loadPassports, loadBookingHistory, "");
 
         return user;
     }
@@ -104,55 +98,39 @@ public final class DataHandler extends DataConstants {
     public static Flight loadFlight(UUID uuid) {
         Flight flight = null;
 
-        try {
-            JSONArray jsonAllFlights = (JSONArray) (DataHandler.parser.parse(new FileReader("json/flights.java")));
+        // match the parameter uuid with the uuid in the json
+        JSONObject jsonFlight = DataHandler.findEntity(uuid, DataConstants.FILEPATH_FLIGHTS);
+        
+        String jsonUUID = (String) jsonFlight.get(DataConstants.ID);
+        String jsonDepTime = (String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_TIME);
+        String jsonArrTime = (String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_TIME);
+        int jsonDepCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_CODE));
+        int jsonArrCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_CODE));
+        double jsonPrice = Double.parseDouble((String) jsonFlight.get(DataConstants.FLIGHT_PRICE));
+        JSONArray jsonSeatMap = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_SEAT_MAP);
+        JSONArray jsonReviews = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_REVIEWS);
+        ArrayList<Review> reviews = DataHandler.reviewsFromJsonArray(jsonReviews);
 
-            // match the parameter uuid with the uuid in the json
-            JSONObject jsonFlight = null;
-            String jsonUUID = null;
-            for (Object obj : jsonAllFlights) {
-                jsonFlight = (JSONObject) obj;
-                jsonUUID = (String) jsonFlight.get(DataConstants.ID);
-
-                // if match
-                if (jsonUUID.equals(uuid.toString())) {
-                    break;
-                }
+        // convert seatMap to boolean[][]
+        boolean[][] seatMap = null;
+        JSONArray row;
+        int count = 0;
+        for (Object obj : jsonSeatMap) {    // for each row of the JSONArray
+            row = (JSONArray) obj;
+            if (count == 0) {
+                seatMap = new boolean[jsonSeatMap.size()][row.size()];
             }
 
-            // load data from the json into variables
-            String jsonDepTime = (String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_TIME);
-            String jsonArrTime = (String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_TIME);
-            int jsonDepCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_CODE));
-            int jsonArrCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_CODE));
-            double jsonPrice = Double.parseDouble((String) jsonFlight.get(DataConstants.FLIGHT_PRICE));
-            JSONArray jsonSeatMap = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_SEAT_MAP);
-            JSONArray jsonReviews = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_REVIEWS);
-            ArrayList<Review> reviews = DataHandler.reviewsFromJsonArray(jsonReviews);
-
-            // convert seatMap to boolean[][]
-            boolean[][] seatMap = null;
-            JSONArray row;
-            int count = 0;
-            for (Object obj : jsonSeatMap) {
-                row = (JSONArray) obj;
-                if (count == 0) {
-                    seatMap = new boolean[jsonSeatMap.size()][row.size()];
-                }
-
-                for (int i = 0; i < row.size(); ++i) {
-                    seatMap[count][i] = (Boolean)row.get(i);
-                }
-
-                count++;
+            // for each column in row
+            for (int i = 0; i < row.size(); ++i) {
+                seatMap[count][i] = (Boolean)row.get(i);
             }
 
-            // create the flight from the loaded data
-            flight = new Flight(UUID.fromString(jsonUUID), jsonPrice, jsonDepTime, jsonArrTime, jsonDepCode, jsonArrCode, seatMap, reviews);
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            count++;
         }
+
+        // create the flight from the loaded data
+        flight = new Flight(UUID.fromString(jsonUUID), jsonPrice, jsonDepTime, jsonArrTime, jsonDepCode, jsonArrCode, seatMap, reviews);
 
         return flight;
     }
@@ -163,33 +141,33 @@ public final class DataHandler extends DataConstants {
      */
     public static ArrayList<BookingAgency> loadAgencies() {
         ArrayList<BookingAgency> agencies = new ArrayList<BookingAgency>();
-        DataHandler.parser = new JSONParser();
+        ArrayList<String> lstBookings = new ArrayList<String>();
 
-        try {
-            JSONArray jsonAgencies = (JSONArray) (DataHandler.parser.parse(new FileReader("json/agencies.json")));
-            JSONObject jsonObj;
-            ArrayList<String> lstBookings = new ArrayList<String>();
-            JSONArray jsonBookings;
-            String agencyName;
+        JSONArray jsonAgencies = DataHandler.createJsonArray(DataConstants.FILEPATH_AGENCIES);
+        JSONArray jsonBookings;
+        JSONObject jsonObj;
 
-            // for each agency in the json file
-            for (Object jsonAgency : jsonAgencies) {
-                jsonObj = (JSONObject) jsonAgency;
-                agencyName = (String)jsonObj.get(DataConstants.AGENCY_NAME);
-                jsonBookings = (JSONArray)jsonObj.get(DataConstants.AGENCY_BOOKINGS);
+        String agencyName;
 
-                lstBookings = DataHandler.jsonArrayToList(jsonBookings);
+        // for each agency in the json file
+        for (Object jsonAgency : jsonAgencies) {
+            jsonObj = (JSONObject) jsonAgency;
+            agencyName = (String)jsonObj.get(DataConstants.AGENCY_NAME);
+            jsonBookings = (JSONArray)jsonObj.get(DataConstants.AGENCY_BOOKINGS);
 
-                agencies.add(new BookingAgency(agencyName, lstBookings));
-            }
+            lstBookings = DataHandler.jsonArrayToList(jsonBookings);
 
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            agencies.add(new BookingAgency(agencyName, lstBookings));
         }
 
         return agencies;
     }
 
+    /**
+     * Return an ArrayList of Reviews from a JSON array
+     * @param jsonReviews
+     * @return ArrayList<Review>
+     */
     private static ArrayList<Review> reviewsFromJsonArray(JSONArray jsonReviews) {
         ArrayList<Review> reviews = new ArrayList<Review>();
     
@@ -224,6 +202,53 @@ public final class DataHandler extends DataConstants {
         }
 
         return list;
+    }
+
+    /**
+     * Finds and returns an entity as JSONObject with matching UUID and entity type
+     * @param id of object
+     * @param filepath path to file
+     * @return JSONObject
+     */
+    private static JSONObject findEntity(UUID id, String filepath) {
+        JSONObject jsonTemp = null;
+        JSONArray entitiesInFile;
+        String jsonUUID = null;
+
+        try {
+            entitiesInFile = (JSONArray) (DataHandler.parser.parse(new FileReader(filepath)));
+
+            for (Object obj : entitiesInFile) {
+                jsonTemp = (JSONObject) obj;
+                jsonUUID = (String) jsonTemp.get(DataConstants.ID);
+    
+                // if match, jsonTemp is the correct entity
+                if (jsonUUID.equals(id.toString())) {
+                    break;
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return jsonTemp;
+    }
+
+    /**
+     * Returns all entities in file
+     * @param filepath of file
+     * @return JSONArray
+     */
+    private static JSONArray createJsonArray(String filepath) {
+        JSONArray array = null;
+        try {
+            array = (JSONArray) DataHandler.parser.parse(new FileReader(filepath));
+        } catch (IOException | ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return array;
     }
 
 }
