@@ -9,8 +9,24 @@ public abstract class BookableEntity {
     protected String name;
     protected UUID uuid = UUID.randomUUID();
     protected double price;
-    protected boolean available;
+    protected boolean available = true;
     protected ArrayList<Review> reviews;
+
+    /**
+     * Protected constructor
+     * @param uuid
+     * @param name
+     * @param price
+     * @param available
+     * @param reviews
+     */
+    protected BookableEntity(UUID uuid, String name, double price, boolean available, ArrayList<Review> reviews) {
+        this.uuid = uuid;
+        this.name = name;
+        this.price = price;
+        this.available = available;
+        this.reviews = reviews;
+    }
 
     /**
      * Accessor for UUID
@@ -64,5 +80,13 @@ public abstract class BookableEntity {
     public void addReview(String firstName, double rating, String comments) {
         Review review = new Review(firstName, rating, comments);
         reviews.add(review);
+    }
+
+    /**
+     * Getter for name of a bookable entity
+     * @return String name of booking
+     */
+    public String getName() {
+        return name;
     }
 }

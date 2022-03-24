@@ -6,7 +6,7 @@
         "dateOfBirth": "01/20/2000",
         "nationality": "American",
         "placeOfBirth": "USA",
-        "sex": "M",
+        "sex": "MALE",
         "dateIssued": "01/20/2018",
         "dateExpiration": "01/20/2024",
         "destinationHistory": [ "USA", "Russia", "Scotland" ]
@@ -17,7 +17,7 @@
         "dateOfBirth": "04/21/2001",
         "nationality": "American",
         "placeOfBirth": "USA",
-        "sex": "M",
+        "sex": "MALE",
         "dateIssued": "04/21/2019",
         "dateExpiration": "04/21/2025",
         "destinationHistory": [ "USA", "Russia", "Scotland", "Bermuda", "Bahama", "Key Largo", "Montego" ]

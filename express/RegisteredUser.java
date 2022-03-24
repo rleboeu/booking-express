@@ -31,13 +31,13 @@ public class RegisteredUser extends User {
      * @param bookingHistory
      * @param location
      */
-    public RegisteredUser(UUID id, String firstName, String lastName, String age, boolean allowedToBook,
+    public RegisteredUser(UUID id, String firstName, String lastName, int age, boolean allowedToBook,
             ArrayList<Passport> passports, ArrayList<BookableEntity> bookingHistory, String location) {
         super(location);
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.age = "" + age;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
         this.bookingHistory = bookingHistory;
