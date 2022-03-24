@@ -34,6 +34,10 @@ public class FlightFilter {
         review = 0.0;
     }
 
+    /**
+     * 
+     * @return
+     */
     public double getDepartureTime() {
         return departureTime;
     }
