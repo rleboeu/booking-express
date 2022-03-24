@@ -138,12 +138,11 @@ public class ConsoleBookingExpress {
         options.add("2. Last Name");
         options.add("3. Date of Birth");
         options.add("4. Nationality");
-        options.add("5. Place of Birth");
-        options.add("6. Sex");
-        options.add("7. Issue Date");
-        options.add("8. Expiration Date");
-        options.add("9. Passport Number");
-        options.add("10. Done");
+        options.add("5. Sex");
+        options.add("6. Issue Date");
+        options.add("7. Expiration Date");
+        options.add("8. Passport Number");
+        options.add("9. Done");
     }
 
     /**
@@ -156,7 +155,7 @@ public class ConsoleBookingExpress {
         for(String option: options) {
             input.put(option, "");
         }
-        input.put(options.get(9), "Done");
+        input.put(options.get(8), "Done");
         return input;
     }
 
@@ -167,7 +166,7 @@ public class ConsoleBookingExpress {
     private void printOptionsWithHashMap(HashMap<String, String> input) {
         for(String option: options) {
             System.out.print(option);
-            if(option != "10. Done"){ System.out.print(": " + input.get(option) + "\n"); }
+            if(option != "9. Done"){ System.out.print(": " + input.get(option) + "\n"); }
         }
         System.out.println("\n");
     }
@@ -193,21 +192,18 @@ public class ConsoleBookingExpress {
                     inputValueScreen("4. Nationality", inputs);
                     break;
                 case "5": validInput = true;
-                    inputValueScreen("5. Place of Birth", inputs);
+                    inputValueScreen("5. Sex", inputs);
                     break;
                 case "6": validInput = true;
-                    inputValueScreen("6. Sex", inputs);
+                    inputValueScreen("6. Issue Date", inputs);
                     break;
                 case "7": validInput = true;
-                    inputValueScreen("7. Issue Date", inputs);
+                    inputValueScreen("7. Expiration Date", inputs);
                     break;
                 case "8": validInput = true;
-                    inputValueScreen("8. Expiration Date", inputs);
+                    inputValueScreen("8. Passport Number", inputs);
                     break;
                 case "9": validInput = true;
-                    inputValueScreen("9. Passport Number", inputs);
-                    break;
-                case "10": validInput = true;
                     if(checkIfDone(inputs)) {
                         registeredUser = user.createAccoutn(inputs.get("1. First Name"), inputs.get("2. Last Name"), 
                             inputs.get("3. Date of Birth"));
@@ -262,8 +258,8 @@ public class ConsoleBookingExpress {
         for(int i = 0; i < ans.length; i++) {
             ans[i] = inputs.get(options.get(i));
         }
-        Passport passport = new Passport(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], 
-            ans[6], ans[7], ans[8], registeredUser.getBookingHistory());
+        Passport passport = new Passport(registeredUser.getUUID(), ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], 
+            ans[6], ans[7], registeredUser.getBookingHistory());
         registeredUser.addPassport(passport);
     }
 
