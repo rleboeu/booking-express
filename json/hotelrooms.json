@@ -1,8 +1,9 @@
 [
     {
         "id": "76b35cab-5a9e-4200-8cec-51f2316124e1",
+        "name": "Motel 6",
         "roomNumber": "J234",
-        "pricePerNight": 80,
+        "price": 80,
         "availabilityStart": "02-25-2022 11:00:00",
         "availibilityEnd": "02-28-2022 10:00:00",
         "numBeds": 1,

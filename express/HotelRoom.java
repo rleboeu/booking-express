@@ -39,6 +39,10 @@ public void setAvailabilityEnd(LocalDate availabilityEnd) {
 public ArrayList<Review> getReviews() {
     return reviews;
 }
+/**
+ * Adds a review to the reviews arraylist
+ * @param review
+ */
 public void addReviews(Review review) {
     reviews.add(review);
 }
