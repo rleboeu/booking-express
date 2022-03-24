@@ -82,8 +82,8 @@ public final class DataHandler extends DataConstants {
         JSONArray jsonHistory = (JSONArray) jsonUser.get(DataConstants.USER_BOOKING_HISTORY);
         JSONArray jsonPassports = (JSONArray) jsonUser.get(DataConstants.USER_PASSPORTS);
 
-        ArrayList<String> loadBookingHistory = DataHandler.jsonArrayToList(jsonHistory);
-        ArrayList<String> loadPassports = DataHandler.jsonArrayToList(jsonPassports);
+        ArrayList<BookableEntity> loadBookingHistory = DataHandler.jsonArrayToList(jsonHistory);
+        ArrayList<Passport> loadPassports = DataHandler.jsonArrayToList(jsonPassports);
 
         user = new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, loadPassports, loadBookingHistory, "");
 

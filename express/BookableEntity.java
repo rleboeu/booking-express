@@ -65,4 +65,12 @@ public abstract class BookableEntity {
         Review review = new Review(firstName, rating, comments);
         reviews.add(review);
     }
+
+    /**
+     * Getter for name of a bookable entity
+     * @return String name of booking
+     */
+    public String getName() {
+        return name;
+    }
 }

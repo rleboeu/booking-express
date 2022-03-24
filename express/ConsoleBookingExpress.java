@@ -100,9 +100,13 @@ public class ConsoleBookingExpress {
                         clear();
                         mainMenu();
                     }
+                    else {
+                        loginScreen();
+                    }
                     break;
                 case "5": validInput = true;
                     if(registeredUser == null) { createAccoutnScreen(false);}
+                    else { bookingHistoryScreen(); }
                     break;
                 case "6": validInput = true;
                     System.exit(0);
@@ -143,6 +147,7 @@ public class ConsoleBookingExpress {
         options.add("7. Expiration Date");
         options.add("8. Passport Number");
         options.add("9. Done");
+        options.add("10. Exit");
     }
 
     /**
@@ -156,6 +161,7 @@ public class ConsoleBookingExpress {
             input.put(option, "");
         }
         input.put(options.get(8), "Done");
+        input.put(options.get(9), "Exit");
         return input;
     }
 
@@ -164,10 +170,11 @@ public class ConsoleBookingExpress {
      * @param input HashMap<String, String> values are the users inputs
      */
     private void printOptionsWithHashMap(HashMap<String, String> input) {
-        for(String option: options) {
-            System.out.print(option);
-            if(option != "9. Done"){ System.out.print(": " + input.get(option) + "\n"); }
+        for(int i = 0; i < options.size() - 2; i++) {
+            System.out.println(options.get(i) + ": " + input.get(options.get(i)));
         }
+        System.out.println(options.get(8));
+        System.out.println(options.get(9));
         System.out.println("\n");
     }
 
@@ -215,6 +222,10 @@ public class ConsoleBookingExpress {
                         createAccoutnScreen(true);
                     }
                     break;
+                case "10": validInput = true;
+                    clear();
+                    mainMenu();
+                    break;
                 default: System.out.println("Invalid input");
                     break;
             }
@@ -243,7 +254,7 @@ public class ConsoleBookingExpress {
      * @return true if all keys have a none empty string value
      */
     private boolean checkIfDone(HashMap<String, String> inputs) {
-        for(int i = 0; i < options.size() - 1; i++) {
+        for(int i = 0; i < options.size() - 2; i++) {
             if(inputs.get(options.get(i)) == ""){ return false; }
         }
         return true;
@@ -261,6 +272,87 @@ public class ConsoleBookingExpress {
         Passport passport = new Passport(registeredUser.getUUID(), ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], 
             ans[6], ans[7], registeredUser.getBookingHistory());
         registeredUser.addPassport(passport);
+    }
+
+    /**
+     * Screen for the user to enter their username
+     */
+    private void loginScreen() {
+        clear();
+        System.out.println("********* Login **********\n");
+        System.out.println("Enter Username:\n");
+        String input = reader.nextLine();
+        enterPasswordScreen(input);
+    }
+
+    /**
+     * Screen for user to enter their paaword
+     * @param username String of the users username
+     */
+    private void enterPasswordScreen(String username) {
+        clear();
+        System.out.println("********* Login **********\n");
+        System.out.println("Enter Password:\n");
+        String input = reader.nextLine();
+        registeredUser = DataHandler.loadUser(username, input);
+        clear();
+        mainMenu();
+    }
+
+    /**
+     * The screen that shows the users booking history
+     */
+    private void bookingHistoryScreen() {
+        clear();
+        System.out.println("******* My Bookings ******\n");
+        if(registeredUser.getBookingHistory() != null){
+            options = bookingHistoryOptions();
+            printBookingHistoryOptions();
+        }
+        else {
+            System.out.println("You have no booking History\n");
+        }
+        System.out.println("Enter 'Done' when done");
+        readBookingHistory();
+    }
+
+    /**
+     * fills out an ArrayList with the name of all the user's bookings
+     * @return ArrayList<String>
+     */
+    private ArrayList<String> bookingHistoryOptions() {
+        ArrayList<String> bookings = new ArrayList<String>();
+        for(int i = 0; i < registeredUser.getBookingHistory().size(); i++) {
+            bookings.add(registeredUser.getBookingHistory().get(i).getName());
+        }
+        return bookings;
+    }
+
+    /**
+     * prints the options ArrayList when it is filled with the user's bookings
+     */
+    private void printBookingHistoryOptions() {
+        for(int i = 0; i < options.size(); i++) {
+            System.out.println((i+1) + ". " + options.get(i));
+        }
+    }
+
+    /**
+     * Reads the input on the booking history page
+     */
+    private void readBookingHistory() {
+        boolean validInput = false;
+        while(!validInput){
+            String input = reader.nextLine();
+            switch(input) {
+                case "Done": case "done": validInput = true;
+                    clear();
+                    mainMenu();
+                    break;
+                default: System.out.println("Invalid input");
+                    break;
+            }
+        }
     }
 
     /**
