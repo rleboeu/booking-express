@@ -12,7 +12,7 @@ public class RegisteredUser extends User {
 
     private String firstName;
     private String lastName;
-    private int age;
+    private String dob;
     private boolean allowedToBook;
     private ArrayList<Passport> passports;
     private int numFlightsCurrentYear;
@@ -29,12 +29,12 @@ public class RegisteredUser extends User {
      * @param bookingHistory ArrayList<BookableEntity>
      * @param location String
      */
-    public RegisteredUser(String firstName, String lastName, int age, boolean allowedToBook,
+    public RegisteredUser(String firstName, String lastName, String dob, boolean allowedToBook,
             ArrayList<Passport> passports, int numFlightsCurrentYear, ArrayList<BookableEntity> bookingHistory, String location) {
         super(location);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.dob = dob;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
         this.numFlightsCurrentYear = numFlightsCurrentYear;
@@ -48,11 +48,12 @@ public class RegisteredUser extends User {
      * @param age int
      * @param location String
      */
-    public RegisteredUser(String firstName, String lastName, int age, String location) {
+    public RegisteredUser(String firstName, String lastName, String dob, String location) {
         super(location);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.dob = dob;
+        passports = new ArrayList<Passport>();
     }
 
     /**
@@ -87,5 +88,15 @@ public class RegisteredUser extends User {
     public void removePassport(Passport passport) {
         passports.remove(passport);
     }
+
+    /**
+     * Gets the booking history of a registered user
+     * @return ArrayList<BookableEntity>
+     */
+    public ArrayList<BookableEntity> getBookingHistory() {
+        return bookingHistory;
+    }
+
+    
     
 }

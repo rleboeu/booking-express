@@ -1,6 +1,7 @@
 package express;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -15,6 +16,7 @@ public class ConsoleBookingExpress {
     private User user;
     private RegisteredUser registeredUser;
     private Scanner reader;
+    private HashMap<String, String> inputs;
 
     /**
      * Constructer
@@ -23,6 +25,7 @@ public class ConsoleBookingExpress {
         System.out.println("Welcome to Booking Express!\n");
         user = new User("");
         registeredUser = null;
+        inputs = new HashMap<String, String>();
         options = new ArrayList<String>(); 
         reader = new Scanner(System.in);
     }
@@ -65,6 +68,7 @@ public class ConsoleBookingExpress {
             options.add("4. Logout");
             options.add("5. My Bookings");
         }
+        options.add("6. Quit");
     }
 
     /**
@@ -91,9 +95,17 @@ public class ConsoleBookingExpress {
                 case "3": validInput = true;
                     break;
                 case "4": validInput = true;
+                    if(options.get(3) == "4. Logout") {
+                        registeredUser = null;
+                        clear();
+                        mainMenu();
+                    }
                     break;
                 case "5": validInput = true;
-                    if(registeredUser == null) { createAccoutnScreen();}
+                    if(registeredUser == null) { createAccoutnScreen(false);}
+                    break;
+                case "6": validInput = true;
+                    System.exit(0);
                     break;
                 default: System.out.println("Invalid input");
                     break;
@@ -104,15 +116,22 @@ public class ConsoleBookingExpress {
     /**
      * prints the Account Creation screen and waits for user input
      */
-    private void createAccoutnScreen() {
+    private void createAccoutnScreen(boolean hasHashMap) {
         clear();
-        System.out.println("***** Create Account *****");
+        System.out.println("***** Create Account *****\n");
         addCreateAccountOptions();
-        printOptions();
+        if(!hasHashMap){
+            inputs.clear();
+            inputs = fillHashmap();
+        }
+        printOptionsWithHashMap(inputs);
         System.out.println("What would you like to do?\n");
-        readCreateAccountInput();
+        readCreateAccountInput(inputs);
     }
 
+    /**
+     * adds the options to be printed for the create account screen
+     */
     private void addCreateAccountOptions() {
         options.clear();
         options.add("1. First Name");
@@ -128,40 +147,124 @@ public class ConsoleBookingExpress {
     }
 
     /**
+     * fills a hasmap with the options strings as the keys and an empty string as the value, 
+     * exept the last value which has done as its value
+     * @return HashMap<String, String>
+     */
+    private HashMap<String, String> fillHashmap() {
+        HashMap<String,String> input = new HashMap<String, String>();
+        for(String option: options) {
+            input.put(option, "");
+        }
+        input.put(options.get(9), "Done");
+        return input;
+    }
+
+    /**
+     * Prints out options followed by an associated value on a hash map
+     * @param input HashMap<String, String> values are the users inputs
+     */
+    private void printOptionsWithHashMap(HashMap<String, String> input) {
+        for(String option: options) {
+            System.out.print(option);
+            if(option != "10. Done"){ System.out.print(": " + input.get(option) + "\n"); }
+        }
+        System.out.println("\n");
+    }
+
+    /**
      * Reads the input from the user on the create account and takes them to the next selected screen
      */
-    private void readCreateAccountInput() {
+    private void readCreateAccountInput(HashMap<String, String> inputs) {
         boolean validInput = false;
         while(!validInput){
             String input = reader.nextLine();
             switch(input) {
                 case "1": validInput = true;
+                    inputValueScreen("1. First Name", inputs);
                     break;
                 case "2": validInput = true;
+                    inputValueScreen("2. Last Name", inputs);
                     break;
                 case "3": validInput = true;
+                    inputValueScreen("3. Date of Birth", inputs);
                     break;
                 case "4": validInput = true;
+                    inputValueScreen("4. Nationality", inputs);
                     break;
                 case "5": validInput = true;
-                    if(registeredUser == null) { createAccoutnScreen();}
+                    inputValueScreen("5. Place of Birth", inputs);
                     break;
                 case "6": validInput = true;
+                    inputValueScreen("6. Sex", inputs);
                     break;
                 case "7": validInput = true;
+                    inputValueScreen("7. Issue Date", inputs);
                     break;
                 case "8": validInput = true;
+                    inputValueScreen("8. Expiration Date", inputs);
                     break;
                 case "9": validInput = true;
+                    inputValueScreen("9. Passport Number", inputs);
                     break;
                 case "10": validInput = true;
-                    clear();
-                    mainMenu();
+                    if(checkIfDone(inputs)) {
+                        registeredUser = user.createAccoutn(inputs.get("1. First Name"), inputs.get("2. Last Name"), 
+                            inputs.get("3. Date of Birth"));
+                        fillOutPassport(inputs);
+                        clear();
+                        mainMenu();
+                    }
+                    else {
+                        createAccoutnScreen(true);
+                    }
                     break;
                 default: System.out.println("Invalid input");
                     break;
             }
+            
         }
+    }
+
+    /**
+     * Screen where the user iputs a value for a given hash table
+     * @param value String the key for the hash table
+     * @param inputs HashTable<String, String>
+     */
+    private void inputValueScreen(String value, HashMap<String, String> inputs) {
+        clear();
+        System.out.println("***** Create Account *****\n");
+        System.out.println("Enter " + value + ":");
+        String input = reader.nextLine();
+        inputs.put(value, input);
+        createAccoutnScreen(true);
+        
+    }
+
+    /**
+     * Checks if the user has inputted all values on the create account screen
+     * @param inputs HashMap<String, String> oof the users inputs
+     * @return true if all keys have a none empty string value
+     */
+    private boolean checkIfDone(HashMap<String, String> inputs) {
+        for(int i = 0; i < options.size() - 1; i++) {
+            if(inputs.get(options.get(i)) == ""){ return false; }
+        }
+        return true;
+    }
+
+    /**
+     * Fills in the passport for a registered user
+     * @param inputs HashTable<String, String> the inputs the user put in
+     */
+    private void fillOutPassport(HashMap<String, String> inputs) {
+        String[] ans = new String[inputs.size() - 1];
+        for(int i = 0; i < ans.length; i++) {
+            ans[i] = inputs.get(options.get(i));
+        }
+        Passport passport = new Passport(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], 
+            ans[6], ans[7], ans[8], registeredUser.getBookingHistory());
+        registeredUser.addPassport(passport);
     }
 
     /**

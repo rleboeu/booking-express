@@ -16,7 +16,7 @@ public class Passport {
     private String dateIssued;
     private String dateExpiration;
     private String passportNum;
-    private ArrayList<String> destinationHistory = new ArrayList<String>();
+    private ArrayList<BookableEntity> destinationHistory = new ArrayList<BookableEntity>();
 /**
  * Contructor for Passport
  * @param firstName first name of person passport
@@ -31,14 +31,15 @@ public class Passport {
  * @param destinationHistory destination history on passport
  */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
-    Sex sex, String dateIssued, String dateExpiration, String passportNum, ArrayList<String> destinationHistory) {
+    String sex, String dateIssued, String dateExpiration, String passportNum, ArrayList<BookableEntity> destinationHistory) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.DOB = DOB;
         this.nationality = nationality;
         this.POB = POB;
-        this.sex = sex;
+        if(sex == "M" || sex == "Male"){ this.sex = Sex.MALE;}
+        else { this.sex = Sex.FEMALE;}
         this.dateIssued = dateIssued;
         this.dateExpiration = dateExpiration;
         this.passportNum = passportNum;
@@ -116,10 +117,10 @@ public class Passport {
     public void setPassportNum(String passportNum) {
         this.passportNum = passportNum;
     }
-    public ArrayList<String> getDestinationHistory() {
+    public ArrayList<BookableEntity> getDestinationHistory() {
         return destinationHistory;
     }
-    public void setDestinationHistory(ArrayList<String> destinationHistory) {
+    public void setDestinationHistory(ArrayList<BookableEntity> destinationHistory) {
         this.destinationHistory = destinationHistory;
     }
 }
