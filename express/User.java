@@ -21,11 +21,11 @@ public class User {
      * creates a registered user based on the user's inputted data
      * @param name String
      * @param lastName String
-     * @param age int
+     * @param dob String date of birth
      * @return The RegisteredUser account
      */
-    public RegisteredUser createAccoutn(String name, String lastName, int age) {
-        return new RegisteredUser(name,lastName,age, location);
+    public RegisteredUser createAccoutn(String name, String lastName, String dob) {
+        return new RegisteredUser(name,lastName,dob, location);
     }
     
 }

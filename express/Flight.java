@@ -1,11 +1,12 @@
 package express;
 
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Holds the information of a given flight
- * @author Miller Banford
+ * @author Miller Banford, Ryan LeBoeuf
  * @version 1.0.0
  */
 public class Flight extends BookableEntity {
@@ -13,30 +14,29 @@ public class Flight extends BookableEntity {
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private int departureCode;
-    
     private int arrivalCode;
     private int totalSeats;
-    private HashMap<String, Boolean> mapFlightSeats;
+    private boolean[][] seatMap;
 
     /**
-     * Constructer for a flight
+     * Flight constructor
+     * @param id UUID 
+     * @param departureTime String
+     * @param arrivalTime String
+     * @param departureCode int
+     * @param arrivalCode int
+     * @param seatMap boolean[][]
+     * @param reviews ArrayList<Review>
      */
-    public Flight(LocalTime departurTime, LocalTime arrivalTime, int departureCode, int arrivalCode, int totalSeats, HashMap<String, Boolean> mapFlightSeats) {
-
-        this.departureTime = departurTime;
-        this.arrivalTime = arrivalTime;
+    public Flight(UUID id, double price, String departureTime, String arrivalTime, int departureCode, int arrivalCode, boolean[][] seatMap, ArrayList<Review> reviews) {
+        this.uuid = id; // parent class
+        this.price = price; // parent class
+        this.departureTime = LocalTime.parse(departureTime);
+        this.arrivalTime = LocalTime.parse(arrivalTime);
         this.departureCode = departureCode;
         this.arrivalCode = arrivalCode;
-        this.totalSeats = totalSeats;
-        this.mapFlightSeats = mapFlightSeats;
-
-    }
-
-    /**
-     * Constructer for a flight
-     */
-    public Flight(int flightId, int departureCode, int totalSeats) {
-
+        this.seatMap = seatMap;
+        this.reviews = reviews; // parent class
     }
 
     /**
@@ -64,11 +64,27 @@ public class Flight extends BookableEntity {
      * @return int totalSeats
      */
     public int getTotalSeats() { return totalSeats; }
+    
     /**
-     * gets the HashMap of the flights seats containg a String name for the seat and a boolean is the seat is booked or not for the flight
-     * @return HashMap<String, Boolean> mapFlightSeats
+     * Returns a String representation of the seats on the flight
+     * @return String
      */
-    public HashMap<String, Boolean> getMapFlightSeats() { return mapFlightSeats; }
+    public String getSeatMap() {
+        StringBuffer sb = new StringBuffer();
+        char a = 'A';
+
+        for (int row = 0; row < this.seatMap.length; ++row) {
+            for (int col = 0; col < this.seatMap[row].length; ++col) {
+                sb.append(a + row); // seat letter
+                sb.append(col + ":");     // seat number
+                sb.append(this.seatMap[row][col] + " ");
+            }
+
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
     
     
 }
