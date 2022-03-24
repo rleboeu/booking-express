@@ -1,6 +1,7 @@
 package express;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 /**
@@ -10,34 +11,35 @@ import java.util.ArrayList;
  */
 public class RegisteredUser extends User {
 
+    private UUID id;
     private String firstName;
     private String lastName;
-    private String dob;
+    private int age;
     private boolean allowedToBook;
-    private ArrayList<Passport> passports;
+    private ArrayList<String> passports;
     private int numFlightsCurrentYear;
-    private ArrayList<BookableEntity> bookingHistory;
+    private ArrayList<String> bookingHistory;
     
     /**
-     * Constructer
-     * @param firstName String
-     * @param lastName String
-     * @param age int
-     * @param allowedToBook boolean
-     * @param passports ArrayList<Passport>
-     * @param numFlightsCurrentYear int
-     * @param bookingHistory ArrayList<BookableEntity>
-     * @param location String
+     * 
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param allowedToBook
+     * @param passports
+     * @param bookingHistory
+     * @param location
      */
-    public RegisteredUser(String firstName, String lastName, String dob, boolean allowedToBook,
-            ArrayList<Passport> passports, int numFlightsCurrentYear, ArrayList<BookableEntity> bookingHistory, String location) {
+    public RegisteredUser(UUID id, String firstName, String lastName, int age, boolean allowedToBook,
+            ArrayList<String> passports, ArrayList<String> bookingHistory, String location) {
         super(location);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dob = dob;
+        this.age = age;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
-        this.numFlightsCurrentYear = numFlightsCurrentYear;
         this.bookingHistory = bookingHistory;
     }
 
@@ -48,55 +50,51 @@ public class RegisteredUser extends User {
      * @param age int
      * @param location String
      */
-    public RegisteredUser(String firstName, String lastName, String dob, String location) {
+    public RegisteredUser(String firstName, String lastName, int age, String location) {
         super(location);
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dob = dob;
-        passports = new ArrayList<Passport>();
+        this.age = age;
     }
 
     /**
      * adds a booking to the bookingHistory Array List
-     * @param booking BookableEntity to be added
+     * @param booking String uuid of booking
      */
-    public void addBooking(BookableEntity booking) {
-        bookingHistory.add(booking);
-
+    public void addBooking(String booking) {
+        if (allowedToBook) {
+            this.bookingHistory.add(booking);
+        }
     }
 
     /**
      * removes a booking to the bookingHistory Array List
-     * @param booking BookableEntity to be removed
+     * @param booking String uuid of booking to be removed
      */
-    public void removeBooking(BookableEntity booking) {
+    public void removeBooking(String booking) {
         bookingHistory.remove(booking);
     }
 
     /**
      * adds a passport to the passports Array List
-     * @param passport Passport to be added
+     * @param passport String uuid of passport to be added
      */
-    public void addPassport(Passport passport) {
+    public void addPassport(String passport) {
         passports.add(passport);
     }
 
     /**
      * removes a passport to the passports Array List
-     * @param passport Passport to be removed
+     * @param passport String uuid of passport to be removed
      */
-    public void removePassport(Passport passport) {
+    public void removePassport(String passport) {
         passports.remove(passport);
     }
-
-    /**
-     * Gets the booking history of a registered user
-     * @return ArrayList<BookableEntity>
-     */
-    public ArrayList<BookableEntity> getBookingHistory() {
-        return bookingHistory;
+    
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName + ", Age: " + this.age;
     }
 
-    
-    
 }

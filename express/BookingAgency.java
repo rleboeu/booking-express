@@ -7,19 +7,16 @@ import java.util.*;
 
 public class BookingAgency {
     String name;
-    String AirportCode;
-    ArrayList<BookableEntity> bookings = new ArrayList<BookableEntity>();
+    ArrayList<String> bookingIds = new ArrayList<String>();
     
 /**
  * Contructor for booking Agency
  * @param name name of booking agency
- * @param AirportCode airport code 
  * @param bookings bookings in agency
  */
-    public BookingAgency(String name, String AirportCode, ArrayList<BookableEntity> bookings) {
+    public BookingAgency(String name, ArrayList<String> bookings) {
         this.name = name;
-        this.AirportCode = AirportCode;
-        this.bookings = bookings;
+        this.bookingIds = bookings;
     }
 /**
  * Contructor for booking agency
@@ -30,41 +27,41 @@ public class BookingAgency {
     }
 /**
  * Adds booking to booking agency
- * @param booking bookings in list
+ * @param bookingId booking in list
  */
-    public void addBooking(BookableEntity booking) {
-        bookings.add(booking);
+    public void addBooking(String bookingId) {
+        bookingIds.add(bookingId);
     }
 /**
  * Removes booking from agency
- * @param booking bookings in list
+ * @param bookingId booking in list
  */
-    public void removeBooking(BookableEntity booking) {
-        bookings.remove(booking);
-    }
-/**
- * returns toString of booking agency
- */
-    public String toString() {
-        return name + " " + AirportCode + " " + bookings;
+    public void removeBooking(String bookingId) {
+        bookingIds.remove(bookingId);
     }
     
+    /**
+     * Accessor for agency name
+     * @return String name
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Mutator for agency name
+     * @param name of agenc
+     */
     public void setName(String name) {
         this.name = name;
     }
-    public String getAirportCode() {
-        return AirportCode;
+    
+    /**
+     * Accessor for agency's bookings
+     * @return ArrayList<String> booking ids
+     */
+    public ArrayList<String> getBookings() {
+        return bookingIds;
     }
-    public void setAirportCode(String airportCode) {
-        AirportCode = airportCode;
-    }
-    public ArrayList<BookableEntity> getBookings() {
-        return bookings;
-    }
-    public void setBookings(ArrayList<BookableEntity> bookings) {
-        this.bookings = bookings;
-    }
+
 }
