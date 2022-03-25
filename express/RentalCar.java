@@ -11,13 +11,14 @@ public class RentalCar extends BookableEntity {
     private LocalDate endDay;
     private int numSeats;
 
-    public RentalCar(CarStyle style, ArrayList<CarFeature> features, LocalDate startDay, LocalDate endDay, int numSeats){
-    this.style = style;
-    this.features = features;
-    this.startDay = startDay;
-    this.startDay = startDay;
-    this.endDay = endDay;
-    this.numSeats = numSeats;
+    public RentalCar(UUID id, String name, double price, boolean available, CarStyle style, ArrayList<CarFeature> features, LocalDate startDay, LocalDate endDay, int numSeats, ArrayList<Review> reviews){
+        super(id, name, price, available, reviews);
+        this.style = style;
+        this.features = features;
+        this.startDay = startDay;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.numSeats = numSeats;
     }
 
     public CarStyle getStyle() {
