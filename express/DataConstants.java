@@ -32,6 +32,7 @@ public abstract class DataConstants {
     protected static final String PASSPORT_DESTINATION_HISTORY = "destinationHistory";
 
     // Constants for users.json
+    protected static final String USER_LOCATION = "location";
     protected static final String USER_USERNAME = "username";
     protected static final String USER_PASSWORD = "password";
     protected static final String USER_AGE = "age";

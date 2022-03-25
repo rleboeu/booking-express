@@ -184,6 +184,7 @@ public final class DataHandler extends DataConstants {
         UUID loadId = UUID.fromString( (String) jsonUser.get(DataConstants.ID) );
         String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
         String loadLastName = (String) jsonUser.get(DataConstants.LAST_NAME);
+        String location = (String) jsonUser.get(DataConstants.USER_LOCATION);
         int loadAge = (Integer) jsonUser.get(DataConstants.USER_AGE);
         boolean loadAllowed = (Boolean) jsonUser.get(DataConstants.USER_ALLOWED_TO_BOOK);
         
@@ -193,11 +194,24 @@ public final class DataHandler extends DataConstants {
         ArrayList<Passport> passports = new ArrayList<Passport>();
         ArrayList<BookableEntity> bookingHistory = new ArrayList<BookableEntity>();
 
+        // load all passports
         JSONObject jsonObj;
         for (Object obj : jsonPassports) {
             jsonObj = (JSONObject) obj;
             passports.add(DataHandler.parsePassport(jsonObj));
         }
+
+        // booking history
+        UUID tempId;
+        BookableEntity tempEntity;
+        for (Object obj : jsonHistory) {
+            tempId = UUID.fromString((String) obj);
+            jsonObj = DataHandler.findEntity(tempId, DataConstants.FILEPATH_FLIGHTS);
+            tempEntity = DataHandler.parseFlight(jsonObj);
+            bookingHistory.add(tempEntity);
+        }
+
+        // TODO
 
         return new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, passports, bookingHistory, location);
     }
@@ -209,12 +223,12 @@ public final class DataHandler extends DataConstants {
         String dateOfBirth = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_OF_BIRTH);
         String nationality = (String) jsonPassport.get(DataConstants.PASSPORT_NATIONALITY);
         String placeOfBirth = (String) jsonPassport.get(DataConstants.PASSPORT_PLACE_OF_BIRTH);
-        Sex sex = (Sex) jsonPassport.get(DataConstants.PASSPORT_SEX);
+        String sex = (String) jsonPassport.get(DataConstants.PASSPORT_SEX);
         String dateIssued = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_ISSUED);
         String dateExpiration = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_EXIPIRATION);
         JSONArray jsonDestHist = (JSONArray) jsonPassport.get(DataConstants.PASSPORT_DESTINATION_HISTORY);
-        ArrayList<String> destinationHistory = DataHandler.jsonArrayToList(jsonDestHist);
-
+        ArrayList<String> destinationHistory = new ArrayList<String>();
+// TODO
         return new Passport(id, firstName, lastName, dateOfBirth, nationality, placeOfBirth, sex, dateIssued, dateExpiration, destinationHistory);
     }
 
@@ -238,6 +252,11 @@ public final class DataHandler extends DataConstants {
         return new RentalCar(id, name, price, available, style, features, startDay, endDay, numSeats, reviews);
     }
 
+    /**
+     * Parses a JSONObject into a HotelRoom
+     * @param jsonHotel JSONObject
+     * @return HotelRoom
+     */
     private static HotelRoom parseHotelRoom(JSONObject jsonHotel) {
         UUID id = UUID.fromString( (String) jsonHotel.get(DataConstants.ID));
         String name = (String) jsonHotel.get(DataConstants.NAME);
@@ -245,6 +264,8 @@ public final class DataHandler extends DataConstants {
         boolean available = (Boolean) jsonHotel.get(AVAILABLE);
         String availabilityStart = (String) jsonHotel.get(HOTEL_AVAIL_START);
         String availabilityEnd = (String) jsonHotel.get(HOTEL_AVAIL_END);
+        LocalDate availStart = LocalDate.parse(availabilityStart);
+        LocalDate availEnd = LocalDate.parse(availabilityEnd);
         int numBeds = Integer.parseInt((String) jsonHotel.get(HOTEL_NUM_BEDS));
         int nearAirportCode = Integer.parseInt((String) jsonHotel.get(HOTEL_NEAR_AIRPORT_CODE));
         ArrayList<Review> reviews = new ArrayList<Review>();
@@ -254,7 +275,7 @@ public final class DataHandler extends DataConstants {
             reviews.add(DataHandler.parseReview((JSONObject) obj));
         }
 
-        return new HotelRoom(id, name, price, available, reviews, availabilityStart, availabilityEnd, numBeds, nearAirportCode);
+        return new HotelRoom(id, name, price, available, nearAirportCode, availStart, availEnd, reviews);
     }
 
 
