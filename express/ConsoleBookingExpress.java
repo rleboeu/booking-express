@@ -270,7 +270,7 @@ public class ConsoleBookingExpress {
             ans[i] = inputs.get(options.get(i));
         }
         Passport passport = new Passport(registeredUser.getUUID(), ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], 
-            ans[6], ans[7], registeredUser.getBookingHistory());
+            ans[6], ans[7], new ArrayList<String>());
         registeredUser.addPassport(passport);
     }
 
