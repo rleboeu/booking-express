@@ -18,7 +18,7 @@ public class Passport {
     private String dateIssued;
     private String dateExpiration;
     public static DateTimeFormatter dateFormatter;
-    private ArrayList<BookableEntity> destinationHistory = new ArrayList<BookableEntity>();
+    private ArrayList<String> destinationHistory = new ArrayList<String>();
 
     /**
      * Constructor for Passport if no UUID is specified
@@ -33,7 +33,7 @@ public class Passport {
      * @param destinationHistory of the passport/person
      */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
-    String sex, String dateIssued, String dateExpiration, ArrayList<BookableEntity> destinationHistory) {
+    String sex, String dateIssued, String dateExpiration, ArrayList<String> destinationHistory) {
         this(UUID.randomUUID(), firstName, lastName, DOB, nationality, POB, sex, dateIssued, dateExpiration, destinationHistory);
     }
 
@@ -51,7 +51,7 @@ public class Passport {
  * @param destinationHistory destination history on passport
  */
     public Passport(UUID id, String firstName, String lastName, String DOB, String nationality, String POB, 
-    String sex, String dateIssued, String dateExpiration, ArrayList<BookableEntity> destinationHistory) {
+    String sex, String dateIssued, String dateExpiration, ArrayList<String> destinationHistory) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
