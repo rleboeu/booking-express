@@ -28,15 +28,13 @@ public class Flight extends BookableEntity {
      * @param seatMap boolean[][]
      * @param reviews ArrayList<Review>
      */
-    public Flight(UUID id, double price, String departureTime, String arrivalTime, int departureCode, int arrivalCode, boolean[][] seatMap, ArrayList<Review> reviews) {
-        this.uuid = id; // parent class
-        this.price = price; // parent class
+    public Flight(UUID uuid, String name, double price, boolean available, String departureTime, String arrivalTime, int departureCode, int arrivalCode, boolean[][] seatMap, ArrayList<Review> reviews) {
+        super(uuid, name, price, available, reviews);
         this.departureTime = LocalTime.parse(departureTime);
         this.arrivalTime = LocalTime.parse(arrivalTime);
         this.departureCode = departureCode;
         this.arrivalCode = arrivalCode;
         this.seatMap = seatMap;
-        this.reviews = reviews; // parent class
     }
 
     /**
