@@ -1,6 +1,7 @@
 package express;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +36,37 @@ public final class DataHandler extends DataConstants {
      * @param user to save (or create)
      */
     public static void saveUser(RegisteredUser user) {
-        // TODO
+        try {
+            String uuid = user.getUUID().toString();
+            JSONArray allUsers = DataHandler.createJsonArray(DataConstants.FILEPATH_USERS);
+            FileWriter file = new FileWriter(DataConstants.FILEPATH_USERS);
+            
+            JSONObject jsonObj = null;
+            for (Object obj : allUsers) {
+                jsonObj = (JSONObject) obj;
+                if (((String) jsonObj.get(DataConstants.ID)).equals(uuid)) {
+                    break;  // found correct one
+                }
+            }
+
+            if (jsonObj != null) {
+                jsonObj.put("location", "Canada");
+            }
+
+            file.write(allUsers.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static JSONObject userToJSON(RegisteredUser user) {
+        JSONObject jsonUser = new JSONObject();
+
+        jsonUser.put(DataConstants.FIRST_NAME, user.getFirstName());
+        jsonUser.put(DataConstants.LAST_NAME, user.getLastName());
+
+        return jsonUser;
     }
 
     /**
@@ -151,7 +182,7 @@ public final class DataHandler extends DataConstants {
         String jsonArrTime = (String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_TIME);
         Airport jsonArrivalAir = Airport.valueOf((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_AIR));
         Airport jsonDepartAir = Airport.valueOf((String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_AIR));
-        double jsonPrice = Double.parseDouble((String) jsonFlight.get(DataConstants.FLIGHT_PRICE));
+        double jsonPrice = (Double) jsonFlight.get(DataConstants.FLIGHT_PRICE);
         JSONArray jsonSeatMap = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_SEAT_MAP);
         JSONArray jsonReviews = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_REVIEWS);
 
@@ -191,7 +222,7 @@ public final class DataHandler extends DataConstants {
      * @return Review
      */
     private static Review parseReview(JSONObject jsonReview) {
-        double rating = Double.parseDouble((String) jsonReview.get(DataConstants.REVIEW_RATING));
+        double rating = (Double) jsonReview.get(DataConstants.REVIEW_RATING);
         String name = (String) jsonReview.get(DataConstants.REVIEW_NAME);
         String comments = (String) jsonReview.get(DataConstants.REVIEW_COMMENTS);
 
@@ -225,7 +256,7 @@ public final class DataHandler extends DataConstants {
         String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
         String loadLastName = (String) jsonUser.get(DataConstants.LAST_NAME);
         String location = (String) jsonUser.get(DataConstants.USER_LOCATION);
-        int loadAge = (Integer) jsonUser.get(DataConstants.USER_AGE);
+        int loadAge = ((Long) jsonUser.get(DataConstants.USER_AGE)).intValue();
         boolean loadAllowed = (Boolean) jsonUser.get(DataConstants.USER_ALLOWED_TO_BOOK);
         
         JSONArray jsonHistory = (JSONArray) jsonUser.get(DataConstants.USER_BOOKING_HISTORY);
@@ -235,10 +266,12 @@ public final class DataHandler extends DataConstants {
         ArrayList<BookableEntity> bookingHistory = new ArrayList<BookableEntity>();
 
         // load all passports
+        UUID jsonUUID;
         JSONObject jsonObj;
         for (Object obj : jsonPassports) {
-            jsonObj = (JSONObject) obj;
-            passports.add(DataHandler.parsePassport(jsonObj));
+            jsonUUID = UUID.fromString((String) obj);
+            jsonObj = DataHandler.findEntity(jsonUUID, DataConstants.FILEPATH_PASSPORTS);
+            passports.add( DataHandler.parsePassport(jsonObj) );
         }
 
         // booking history
@@ -302,7 +335,7 @@ public final class DataHandler extends DataConstants {
 
         LocalDate startDay = LocalDate.parse((String) jsonCar.get(CAR_START_DAY));
         LocalDate endDay = LocalDate.parse((String) jsonCar.get(CAR_END_DAY));
-        int numSeats = (Integer) jsonCar.get(CAR_NUM_SEATS);
+        int numSeats = ((Long) jsonCar.get(CAR_NUM_SEATS)).intValue();
         JSONArray jsonReviews = (JSONArray) jsonCar.get(CAR_REVIEWS);
         ArrayList<Review> reviews = new ArrayList<Review>();
 
@@ -327,7 +360,7 @@ public final class DataHandler extends DataConstants {
         String availabilityEnd = (String) jsonHotel.get(HOTEL_AVAIL_END);
         LocalDate availStart = LocalDate.parse(availabilityStart);
         LocalDate availEnd = LocalDate.parse(availabilityEnd);
-        int numBeds = Integer.parseInt((String) jsonHotel.get(HOTEL_NUM_BEDS));
+        int numBeds = ((Long) jsonHotel.get(HOTEL_NUM_BEDS)).intValue();
         Airport nearAirportCode = Airport.valueOf((String) jsonHotel.get(HOTEL_NEAR_AIRPORT));
         ArrayList<Review> reviews = new ArrayList<Review>();
         JSONArray jsonReviews = (JSONArray) jsonHotel.get(HOTEL_REVIEWS);
