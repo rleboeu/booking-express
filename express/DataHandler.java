@@ -122,14 +122,35 @@ public final class DataHandler extends DataConstants {
         return agencies;
     }
 
+    /**
+     * Returns all entities in file
+     * @param filepath of file
+     * @return JSONArray
+     */
+    private static JSONArray createJsonArray(String filepath) {
+        JSONArray array = null;
+        try {
+            array = (JSONArray) DataHandler.parser.parse(new FileReader(filepath));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return array;
+    }
+
+    /**
+     * Parses a JSONObject into a Flight
+     * @param jsonFlight JSONObject
+     * @return Flight
+     */
     private static Flight parseFlight(JSONObject jsonFlight) {
         String jsonUUID = (String) jsonFlight.get(DataConstants.ID);
         String jsonName = (String) jsonFlight.get(DataConstants.NAME);
         boolean jsonAvailable = (Boolean) jsonFlight.get(DataConstants.AVAILABLE);
         String jsonDepTime = (String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_TIME);
         String jsonArrTime = (String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_TIME);
-        int jsonDepCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_CODE));
-        int jsonArrCode = Integer.parseInt((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_CODE));
+        Airport jsonArrivalAir = Airport.valueOf((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_AIR));
+        Airport jsonDepartAir = Airport.valueOf((String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_AIR));
         double jsonPrice = Double.parseDouble((String) jsonFlight.get(DataConstants.FLIGHT_PRICE));
         JSONArray jsonSeatMap = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_SEAT_MAP);
         JSONArray jsonReviews = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_REVIEWS);
@@ -161,9 +182,14 @@ public final class DataHandler extends DataConstants {
         }
 
         // create the flight from the loaded data
-        return new Flight(UUID.fromString(jsonUUID), jsonName, jsonPrice, jsonAvailable, jsonDepTime, jsonArrTime, jsonDepCode, jsonArrCode, seatMap, reviews);
+        return new Flight(UUID.fromString(jsonUUID), jsonName, jsonPrice, jsonAvailable, jsonDepTime, jsonArrTime, jsonDepartAir, jsonArrivalAir, seatMap, reviews);
     }
 
+    /**
+     * Parses a JSONObject into a Review
+     * @param jsonReview JSONObject
+     * @return Review
+     */
     private static Review parseReview(JSONObject jsonReview) {
         double rating = Double.parseDouble((String) jsonReview.get(DataConstants.REVIEW_RATING));
         String name = (String) jsonReview.get(DataConstants.REVIEW_NAME);
@@ -172,14 +198,28 @@ public final class DataHandler extends DataConstants {
         return new Review(name, rating, comments);
     }
 
+    /**
+     * Parses a JSONObject into a BookingAgency
+     * @param jsonAgency JSONObject
+     * @return BookingAgency
+     */
     private static BookingAgency parseAgency(JSONObject jsonAgency) {
         String agencyName = (String)jsonAgency.get(DataConstants.AGENCY_NAME);
         JSONArray jsonBookings = (JSONArray)jsonAgency.get(DataConstants.AGENCY_BOOKINGS);
-        ArrayList<String> lstBookings = DataHandler.jsonArrayToList(jsonBookings);
+        ArrayList<String> lstBookings = new ArrayList<String>();
+
+        for (Object obj : jsonBookings) {
+            lstBookings.add((String) obj);
+        }
 
         return new BookingAgency(agencyName, lstBookings);
     }
 
+    /**
+     * Parses a JSONObject into a RegisteredUser
+     * @param jsonUser JSONObject
+     * @return RegisteredUser
+     */
     private static RegisteredUser parseUser(JSONObject jsonUser) {
         UUID loadId = UUID.fromString( (String) jsonUser.get(DataConstants.ID) );
         String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
@@ -216,6 +256,11 @@ public final class DataHandler extends DataConstants {
         return new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, passports, bookingHistory, location);
     }
 
+    /**
+     * Parses a JSONObject into a Passport
+     * @param jsonPassport JSONObject
+     * @return Passport
+     */
     private static Passport parsePassport(JSONObject jsonPassport) {
         UUID id = UUID.fromString((String) jsonPassport.get(DataConstants.ID));
         String firstName = (String) jsonPassport.get(DataConstants.FIRST_NAME);
@@ -227,18 +272,34 @@ public final class DataHandler extends DataConstants {
         String dateIssued = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_ISSUED);
         String dateExpiration = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_EXIPIRATION);
         JSONArray jsonDestHist = (JSONArray) jsonPassport.get(DataConstants.PASSPORT_DESTINATION_HISTORY);
-        ArrayList<String> destinationHistory = new ArrayList<String>();
-// TODO
+        ArrayList<Airport> destinationHistory = new ArrayList<Airport>();
+
+        for (Object obj : jsonDestHist) {
+            destinationHistory.add(Airport.valueOf((String) obj));
+        }
+
         return new Passport(id, firstName, lastName, dateOfBirth, nationality, placeOfBirth, sex, dateIssued, dateExpiration, destinationHistory);
     }
 
+    /**
+     * Parses a JSONObject into a RentalCar
+     * @param jsonCar JSONObject
+     * @return RentalCar
+     */
     private static RentalCar parseCar(JSONObject jsonCar) {
         UUID id = UUID.fromString( (String) jsonCar.get(DataConstants.ID));
         String name = (String) jsonCar.get(DataConstants.CAR_NAME);
         double price = (Double) jsonCar.get(DataConstants.CAR_PRICE);
         boolean available = (Boolean) jsonCar.get(DataConstants.AVAILABLE);
-        CarStyle style = (CarStyle) jsonCar.get(DataConstants.CAR_STYLE);
-        ArrayList<CarFeature> features = DataHandler.jsonArrayToList( (JSONArray) jsonCar.get(DataConstants.CAR_FEATURES));
+        CarStyle style = CarStyle.valueOf((String) jsonCar.get(DataConstants.CAR_STYLE));
+        ArrayList<CarFeature> features = new ArrayList<CarFeature>();
+        JSONArray jsonFeatures = (JSONArray) jsonCar.get(DataConstants.CAR_FEATURES);
+
+        // Convert strings in features to CarFeature enum
+        for (Object obj : jsonFeatures) {
+            features.add(CarFeature.valueOf((String) obj));
+        }
+
         LocalDate startDay = LocalDate.parse((String) jsonCar.get(CAR_START_DAY));
         LocalDate endDay = LocalDate.parse((String) jsonCar.get(CAR_END_DAY));
         int numSeats = (Integer) jsonCar.get(CAR_NUM_SEATS);
@@ -267,7 +328,7 @@ public final class DataHandler extends DataConstants {
         LocalDate availStart = LocalDate.parse(availabilityStart);
         LocalDate availEnd = LocalDate.parse(availabilityEnd);
         int numBeds = Integer.parseInt((String) jsonHotel.get(HOTEL_NUM_BEDS));
-        int nearAirportCode = Integer.parseInt((String) jsonHotel.get(HOTEL_NEAR_AIRPORT_CODE));
+        Airport nearAirportCode = Airport.valueOf((String) jsonHotel.get(HOTEL_NEAR_AIRPORT));
         ArrayList<Review> reviews = new ArrayList<Review>();
         JSONArray jsonReviews = (JSONArray) jsonHotel.get(HOTEL_REVIEWS);
 
@@ -275,27 +336,7 @@ public final class DataHandler extends DataConstants {
             reviews.add(DataHandler.parseReview((JSONObject) obj));
         }
 
-        return new HotelRoom(id, name, price, available, nearAirportCode, availStart, availEnd, reviews);
-    }
-
-
-
-    /**
-     * Converts a JSONArray to an ArrayList of generic type
-     * @param <T> generic type
-     * @param jsonArray JSONArray to convert
-     * @return ArrayList<T> list
-     */
-    private static <T> ArrayList<T> jsonArrayToList(JSONArray jsonArray) {
-        ArrayList<T> list = new ArrayList<T>();
-
-        T jsonT;
-        for (Object jsonObj : jsonArray) {
-            jsonT = (T)jsonObj;
-            list.add(jsonT);
-        }
-
-        return list;
+        return new HotelRoom(id, name, price, available, numBeds, nearAirportCode, availStart, availEnd, reviews);
     }
 
     /**
@@ -328,20 +369,6 @@ public final class DataHandler extends DataConstants {
         return jsonTemp;
     }
 
-    /**
-     * Returns all entities in file
-     * @param filepath of file
-     * @return JSONArray
-     */
-    private static JSONArray createJsonArray(String filepath) {
-        JSONArray array = null;
-        try {
-            array = (JSONArray) DataHandler.parser.parse(new FileReader(filepath));
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-
-        return array;
-    }
+    
 
 }

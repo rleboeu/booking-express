@@ -43,8 +43,8 @@ public abstract class DataConstants {
     // Constants for flights.json
     protected static final String FLIGHT_DEPARTURE_TIME = "departureTime";
     protected static final String FLIGHT_ARRIVAL_TIME = "arrivalTime";
-    protected static final String FLIGHT_DEPARTURE_CODE = "departureCode";
-    protected static final String FLIGHT_ARRIVAL_CODE = "arrivalCode";
+    protected static final String FLIGHT_DEPARTURE_AIR = "departureAirport";
+    protected static final String FLIGHT_ARRIVAL_AIR = "arrivalAirport";
     protected static final String FLIGHT_PRICE = "price";
     protected static final String FLIGHT_SEAT_MAP = "seatMap";
     protected static final String FLIGHT_REVIEWS = "reviews";
@@ -55,7 +55,7 @@ public abstract class DataConstants {
     protected static final String HOTEL_AVAIL_START = "availabilityStart";
     protected static final String HOTEL_AVAIL_END = "availabilityEnd";
     protected static final String HOTEL_NUM_BEDS = "numBeds";
-    protected static final String HOTEL_NEAR_AIRPORT_CODE = "nearAirportCode";
+    protected static final String HOTEL_NEAR_AIRPORT = "nearAirport";
     protected static final String HOTEL_REVIEWS = "reviews";
 
     // Constants for cars.json

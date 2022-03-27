@@ -1,6 +1,6 @@
 /**
  * Class for passport
- * @author Andrew Garcia
+ * @author Andrew Garcia, Ryan LeBoeuf
  */
 package express;
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ public class Passport {
     private String dateIssued;
     private String dateExpiration;
     public static DateTimeFormatter dateFormatter;
-    private ArrayList<String> destinationHistory = new ArrayList<String>();
+    private ArrayList<Airport> destinationHistory = new ArrayList<Airport>();
 
     /**
      * Constructor for Passport if no UUID is specified
@@ -33,7 +33,7 @@ public class Passport {
      * @param destinationHistory of the passport/person
      */
     public Passport(String firstName, String lastName, String DOB, String nationality, String POB, 
-    String sex, String dateIssued, String dateExpiration, ArrayList<String> destinationHistory) {
+    String sex, String dateIssued, String dateExpiration, ArrayList<Airport> destinationHistory) {
         this(UUID.randomUUID(), firstName, lastName, DOB, nationality, POB, sex, dateIssued, dateExpiration, destinationHistory);
     }
 
@@ -51,7 +51,7 @@ public class Passport {
  * @param destinationHistory destination history on passport
  */
     public Passport(UUID id, String firstName, String lastName, String DOB, String nationality, String POB, 
-    String sex, String dateIssued, String dateExpiration, ArrayList<String> destinationHistory) {
+    String sex, String dateIssued, String dateExpiration, ArrayList<Airport> destinationHistory) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -70,7 +70,7 @@ public class Passport {
  */
     public boolean isValid() {
         try{
-            LocalDate.parse(dateExpiration, this.dateFormatter);
+            LocalDate.parse(dateExpiration, Passport.dateFormatter);
         } catch (DateTimeParseException e) {
             return false;
         }
@@ -176,16 +176,32 @@ public class Passport {
     }
 /**
  * Return passport/person destination history 
- * @return
+ * @return ArrayList<Airport>
  */
-    public ArrayList<String> getDestinationHistory() {
+    public ArrayList<Airport> getDestinationHistory() {
         return destinationHistory;
     }
+
+    /**
+     * Return passport/person destination history as Strings rather
+     * than Airport enum
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getDestHistoryAsStrings() {
+        ArrayList<String> history = new ArrayList<String>();
+        
+        for (Airport airport : this.destinationHistory) {
+            history.add(airport.toString());
+        }
+
+        return history;
+    }
+
 /**
  * Adds destination to destination history
  * @param destination place person has been
  */
-    public void addDestinationHis(String destination) {
+    public void addDestinationHis(Airport destination) {
         destinationHistory.add(destination);
     }
 }

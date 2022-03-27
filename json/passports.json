@@ -9,7 +9,7 @@
         "sex": "MALE",
         "dateIssued": "01/20/2018",
         "dateExpiration": "01/20/2024",
-        "destinationHistory": [ "USA", "Russia", "Scotland" ]
+        "destinationHistory": [ "MOB", "ANC", "SAN" ]
     },{
         "id": "f2390156-00c6-4f4b-80a6-b4f3d8bd206f",
         "firstName": "Roman",
@@ -20,6 +20,6 @@
         "sex": "MALE",
         "dateIssued": "04/21/2019",
         "dateExpiration": "04/21/2025",
-        "destinationHistory": [ "USA", "Russia", "Scotland", "Bermuda", "Bahama", "Key Largo", "Montego" ]
+        "destinationHistory": [ "MOB", "ANC", "SAN", "PHX", "LAX", "DEN", "LIT" ]
     }
 ]

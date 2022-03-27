@@ -8,7 +8,7 @@ public class HotelRoom extends BookableEntity {
     private LocalDate availabilityStart;
     private LocalDate availabilityEnd;
     private int numBeds;
-    private int nearAirportCode;
+    private Airport nearAirportCode;
     private ArrayList<Review> reviews;
 /**
  * Constructor for HotelRoom
@@ -17,12 +17,13 @@ public class HotelRoom extends BookableEntity {
  * @param availabilityEnd Initializes the date of the hotel availabilities end
  * @param reviews Initializes arraylist of reviews
  */
-    public HotelRoom(UUID uuid, String name, double price, boolean available, int nearAirportCode, LocalDate availabilityStart, LocalDate availabilityEnd, ArrayList<Review> reviews){
+    public HotelRoom(UUID uuid, String name, double price, boolean available, int numBeds, Airport nearAirportCode, LocalDate availabilityStart, LocalDate availabilityEnd, ArrayList<Review> reviews){
         super(uuid, name, price, available, reviews);
         this.availabilityStart = availabilityStart;
         this.availabilityEnd = availabilityEnd;
         this.reviews = reviews;
         this.nearAirportCode = nearAirportCode;
+        this.numBeds = numBeds;
     }
 /**
  * Accessor for getting the start of availability

@@ -7,7 +7,7 @@
         "availabilityStart": "02-25-2022 11:00:00",
         "availibilityEnd": "02-28-2022 10:00:00",
         "numBeds": 1,
-        "nearAirportCode": 273483,
+        "nearAirport": "LAX",
         "available": true,
         "reviews": [
             {
