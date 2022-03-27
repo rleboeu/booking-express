@@ -305,10 +305,10 @@ public final class DataHandler extends DataConstants {
         String dateIssued = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_ISSUED);
         String dateExpiration = (String) jsonPassport.get(DataConstants.PASSPORT_DATE_EXIPIRATION);
         JSONArray jsonDestHist = (JSONArray) jsonPassport.get(DataConstants.PASSPORT_DESTINATION_HISTORY);
-        ArrayList<Airport> destinationHistory = new ArrayList<Airport>();
+        ArrayList<String> destinationHistory = new ArrayList<String>();
 
         for (Object obj : jsonDestHist) {
-            destinationHistory.add(Airport.valueOf((String) obj));
+            destinationHistory.add(String.valueOf((String) obj));
         }
 
         return new Passport(id, firstName, lastName, dateOfBirth, nationality, placeOfBirth, sex, dateIssued, dateExpiration, destinationHistory);
