@@ -13,8 +13,8 @@ public class Flight extends BookableEntity {
 
     private LocalTime departureTime;
     private LocalTime arrivalTime;
-    private int departureCode;
-    private int arrivalCode;
+    private Airport departureAirport;
+    private Airport arrivalAirport;
     private int totalSeats;
     private boolean[][] seatMap;
 
@@ -23,17 +23,18 @@ public class Flight extends BookableEntity {
      * @param id UUID 
      * @param departureTime String
      * @param arrivalTime String
-     * @param departureCode int
-     * @param arrivalCode int
+     * @param departureAirport Airport
+     * @param arrivalAirport Airport
      * @param seatMap boolean[][]
      * @param reviews ArrayList<Review>
      */
-    public Flight(UUID uuid, String name, double price, boolean available, String departureTime, String arrivalTime, int departureCode, int arrivalCode, boolean[][] seatMap, ArrayList<Review> reviews) {
+    public Flight(UUID uuid, String name, double price, boolean available, String departureTime, String arrivalTime, Airport departureAirport, Airport arrivalAirport, boolean[][] seatMap, ArrayList<Review> reviews) {
         super(uuid, name, price, available, reviews);
+
         this.departureTime = LocalTime.parse(departureTime);
         this.arrivalTime = LocalTime.parse(arrivalTime);
-        this.departureCode = departureCode;
-        this.arrivalCode = arrivalCode;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
         this.seatMap = seatMap;
     }
 
@@ -48,15 +49,15 @@ public class Flight extends BookableEntity {
      */
     public LocalTime getArrivalTime() { return arrivalTime; }
     /**
-     * gets the departure code for the flight
-     * @return int departureCode
+     * gets the departure Airport for the flight
+     * @return Airport departureAirport
      */
-    public int getDepartureCode() { return departureCode; }
+    public Airport getDepartureCode() { return departureAirport; }
     /**
-     * gets the arrival code for the flight
-     * @return int arrivalCode
+     * gets the arrival Airport for the flight
+     * @return Airport arrivalAirport
      */
-    public int getArrivalCode() { return arrivalCode; }
+    public Airport getArrivalCode() { return arrivalAirport; }
     /**
      * gets the total number of seats for the flight
      * @return int totalSeats
