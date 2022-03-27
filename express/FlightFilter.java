@@ -110,20 +110,29 @@ public class FlightFilter {
     }
     /**
      * Accessor for getting the airline
-     * @return 
+     * @return the airline 
      */
     public ArrayList<String> getAirline() {
         return airline;
     }
-
+    /**
+     * Mutator for setting the airline
+     * @param airline passes the airline variable in
+     */
     public void setAirline(ArrayList<String> airline) {
         this.airline = airline;
     }
-
+    /**
+     * Accessor for getting the review variable
+     * @return the review
+     */
     public double getReview() {
         return review;
     }
-
+    /**
+     * Mutator for setting the review variable
+     * @param review passes the review variable in
+     */
     public void setReview(double review) {
         this.review = review;
     }

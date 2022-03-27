@@ -10,7 +10,9 @@ public class CarFilter {
     private double review;
     private CarStyle style;
     private String location;
-
+/**
+ * Constructor for car filter
+ */
     public CarFilter(){
         departureDate = null;
         arrivalDate = null;
