@@ -14,6 +14,8 @@ public class RegisteredUser extends User {
     private UUID id;
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
     private int age;
     private boolean allowedToBook;
     private ArrayList<Passport> passports;
@@ -31,12 +33,14 @@ public class RegisteredUser extends User {
      * @param bookingHistory
      * @param location
      */
-    public RegisteredUser(UUID id, String firstName, String lastName, int age, boolean allowedToBook,
+    public RegisteredUser(UUID id, String firstName, String lastName, String username, String password, int age, boolean allowedToBook,
             ArrayList<Passport> passports, ArrayList<BookableEntity> bookingHistory, String location) {
         super(location);
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.age = age;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
@@ -148,6 +152,59 @@ public class RegisteredUser extends User {
     public ArrayList<Passport> getPassports() {
         return passports;
     }
+
+    /**
+     * Accessor for password
+     * @return String
+     */
+    public String getPassword() {
+        return this.password;
+    }
+
+    /**
+     * Accessor for username
+     * @return String
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
+     * Get the user's booking history as an ArrayList of UUID strings
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getBookingHistoryIDs() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        for (BookableEntity ent : this.bookingHistory) {
+            list.add(ent.getUUID().toString());
+        }
+
+        return list;
+    }
+
+    /**
+     * Get the user's passports as an ArrayList of UUID strings
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getPassportIDs() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        for (Passport passport : this.passports) {
+            list.add(passport.getId().toString());
+        }
+
+        return list;
+    }
+
+    /**
+     * Accessor for if the user is allowed to book
+     * @return boolean
+     */
+    public boolean getAllowedToBook() {
+        return this.allowedToBook;
+    }
+
     /**
      * gets the number of flights in the current year
      * @return number of flights current year
