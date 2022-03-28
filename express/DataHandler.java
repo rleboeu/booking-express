@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -37,36 +38,63 @@ public final class DataHandler extends DataConstants {
      */
     public static void saveUser(RegisteredUser user) {
         try {
-            String uuid = user.getUUID().toString();
             JSONArray allUsers = DataHandler.createJsonArray(DataConstants.FILEPATH_USERS);
             FileWriter file = new FileWriter(DataConstants.FILEPATH_USERS);
             
-            JSONObject jsonObj = null;
-            for (Object obj : allUsers) {
-                jsonObj = (JSONObject) obj;
-                if (((String) jsonObj.get(DataConstants.ID)).equals(uuid)) {
-                    break;  // found correct one
+            JSONObject givenUser = DataHandler.userToJSON(user);
+
+            // Attempt to find the user in the file
+            JSONObject potentialUser;
+            boolean userExists = false;
+            int index;
+            String potentialUUID;
+            for (index = 0; index < allUsers.size(); ++index) {
+                potentialUser = (JSONObject) allUsers.get(index);
+                potentialUUID = (String) potentialUser.get(DataConstants.ID);
+                if (potentialUUID.equals(user.getUUID().toString())) {
+                    // The user exists, therefore modify the potential user
+                    userExists = true;
+                    break;
                 }
             }
-
-            if (jsonObj != null) {
-                jsonObj.put("location", "Canada");
+            
+            // If the user does not already exist in the file, givenUser will 
+            // be added to the file instead of updating the potentialUser
+            if (userExists) {
+                allUsers.set(index, givenUser);
+            } else {
+                allUsers.add(givenUser);
             }
 
+            // Save changes by writing to the file
             file.write(allUsers.toJSONString());
             file.flush();
+            file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Convert a RegisteredUser object to a JSONObject
+     * @param user RegisteredUser
+     * @return JSONObject
+     */
     private static JSONObject userToJSON(RegisteredUser user) {
-        JSONObject jsonUser = new JSONObject();
+        HashMap<String, Object> jsonUser = new HashMap<String, Object>();
 
         jsonUser.put(DataConstants.FIRST_NAME, user.getFirstName());
         jsonUser.put(DataConstants.LAST_NAME, user.getLastName());
+        jsonUser.put(DataConstants.USER_PASSWORD, user.getPassword());
+        jsonUser.put(DataConstants.USER_BOOKING_HISTORY, user.getBookingHistoryIDs());
+        jsonUser.put(DataConstants.USER_LOCATION, user.getLocation());
+        jsonUser.put(DataConstants.ID, user.getUUID().toString());
+        jsonUser.put(DataConstants.USER_PASSPORTS, user.getPassportIDs());
+        jsonUser.put(DataConstants.USER_AGE, user.getAge());
+        jsonUser.put(DataConstants.USER_USERNAME, user.getUsername());
+        jsonUser.put(DataConstants.USER_ALLOWED_TO_BOOK, user.getAllowedToBook());
 
-        return jsonUser;
+        return new JSONObject(jsonUser);
     }
 
     /**
@@ -256,6 +284,8 @@ public final class DataHandler extends DataConstants {
         String loadFirstName = (String) jsonUser.get(DataConstants.FIRST_NAME);
         String loadLastName = (String) jsonUser.get(DataConstants.LAST_NAME);
         String location = (String) jsonUser.get(DataConstants.USER_LOCATION);
+        String username = (String) jsonUser.get(DataConstants.USER_USERNAME);
+        String password = (String) jsonUser.get(DataConstants.USER_PASSWORD);
         int loadAge = ((Long) jsonUser.get(DataConstants.USER_AGE)).intValue();
         boolean loadAllowed = (Boolean) jsonUser.get(DataConstants.USER_ALLOWED_TO_BOOK);
         
@@ -286,7 +316,7 @@ public final class DataHandler extends DataConstants {
 
         // TODO
 
-        return new RegisteredUser(loadId, loadFirstName, loadLastName, loadAge, loadAllowed, passports, bookingHistory, location);
+        return new RegisteredUser(loadId, loadFirstName, loadLastName, username, password, loadAge, loadAllowed, passports, bookingHistory, location);
     }
 
     /**
@@ -401,7 +431,5 @@ public final class DataHandler extends DataConstants {
 
         return jsonTemp;
     }
-
-    
 
 }
