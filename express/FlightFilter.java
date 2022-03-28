@@ -23,10 +23,10 @@ public class FlightFilter {
  */
     public FlightFilter(){
         departureTime = 0.0;
-        departureDate = LocalDate.of(2022,03,17);
+        departureDate = LocalDate.of(9999,12,31);
         departureAirportCode = "HM887890";
         arrivalTime = 0.0;
-        arrivalDate = LocalDate.of(2022,03,17);
+        arrivalDate = LocalDate.of(9999,12,31);
         arrivalAirportCode = "HM887890";
         flightPriceMax = 0.0;
         numberOfLayovers = 0;
