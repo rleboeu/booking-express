@@ -24,8 +24,16 @@ public class User {
      * @param dob String date of birth
      * @return The RegisteredUser account
      */
-    public RegisteredUser createAccoutn(String name, String lastName, String dob) {
-        return new RegisteredUser(name,lastName,dob, location);
+    public RegisteredUser createAccoutn(String name, String lastName, int age) {
+        return new RegisteredUser(name,lastName, age, location);
     }
     
+    /**
+     * Accessor for User location
+     * @return String location
+     */
+    public String getLocation() {
+        return this.location;
+    }
+
 }
