@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * is a user whos information for booking a flight is saved into the system
- * @author Miller Banford
+ * @author Miller Banford, Thomas Ferguson
  * @version 1.0.0
  */
 public class RegisteredUser extends User {
@@ -112,6 +112,48 @@ public class RegisteredUser extends User {
      */
     public UUID getUUID() {
         return id;
+    }
+    /**
+     * gets the first name of the user
+     * @return first name
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+    /**
+     * gets the last name of the user
+     * @return last name
+     */
+    public String getLastName() {
+        return lastName;
+    }
+    /**
+     * gets the age of the user
+     * @return age
+     */
+    public String getAge() {
+        return age;
+    }
+    /**
+     * Sets allowed to book to is allowed
+     * @return allowedToBook
+     */
+    public boolean isAllowedToBook() {
+        return allowedToBook;
+    }
+    /**
+     * gets the passports
+     * @return passports
+     */
+    public ArrayList<Passport> getPassports() {
+        return passports;
+    }
+    /**
+     * gets the number of flights in the current year
+     * @return number of flights current year
+     */
+    public int getNumFlightsCurrentYear() {
+        return numFlightsCurrentYear;
     }
 
 }
