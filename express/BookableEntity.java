@@ -89,4 +89,19 @@ public abstract class BookableEntity {
     public String getName() {
         return name;
     }
+    /**
+     * Gets price of bookable entity
+     * @return price of entity
+     */
+    public double getPrice() {
+        return price;
+    }
+    /**
+     * Gets the reviews of the bookable entity
+     * @return arraylist of reviews
+     */
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
+    
 }
