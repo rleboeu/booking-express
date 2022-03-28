@@ -67,5 +67,33 @@ public ArrayList<Review> getReviews() {
 public void addReviews(Review review) {
     reviews.add(review);
 }
+/**
+ * Gets the number of beds
+ * @return the number of beds
+ */
+public int getNumBeds() {
+    return numBeds;
+}
+/**
+ * Sets the number of beds
+ * @param numBeds the number of beds
+ */
+public void setNumBeds(int numBeds) {
+    this.numBeds = numBeds;
+}
+/**
+ * Gets the airport code
+ * @return the airport code
+ */
+public Airport getNearAirportCode() {
+    return nearAirportCode;
+}
+/**
+ * Sets the airport code
+ * @param nearAirportCode the airport code
+ */
+public void setNearAirportCode(Airport nearAirportCode) {
+    this.nearAirportCode = nearAirportCode;
+}
     
 }
