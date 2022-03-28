@@ -14,7 +14,7 @@ public class RegisteredUser extends User {
     private UUID id;
     private String firstName;
     private String lastName;
-    private String age;
+    private int age;
     private boolean allowedToBook;
     private ArrayList<Passport> passports;
     private int numFlightsCurrentYear;
@@ -37,7 +37,7 @@ public class RegisteredUser extends User {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = "" + age;
+        this.age = age;
         this.allowedToBook = allowedToBook;
         this.passports = passports;
         this.bookingHistory = bookingHistory;
@@ -50,7 +50,7 @@ public class RegisteredUser extends User {
      * @param age int
      * @param location String
      */
-    public RegisteredUser(String firstName, String lastName, String age, String location) {
+    public RegisteredUser(String firstName, String lastName, int age, String location) {
         super(location);
         this.id = UUID.randomUUID();
         this.firstName = firstName;
@@ -131,7 +131,7 @@ public class RegisteredUser extends User {
      * gets the age of the user
      * @return age
      */
-    public String getAge() {
+    public int getAge() {
         return age;
     }
     /**
