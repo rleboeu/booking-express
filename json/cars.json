@@ -2,11 +2,11 @@
     {
         "id": "64c28297-05f0-44eb-b2b5-4303275b12b5",
         "name": "Honda Civic 2009",
-        "price": 350,
+        "price": 350.0,
         "style": "SEDAN_2_DOOR",
         "features": [ "SPORTS_SEATS", "WINDOW_TINT", "HEATED_SEATS", "HIGH_END_SOUND" ],
-        "startDay": "02/28/2022",
-        "endDay": "03/05/2022",
+        "startDay": "2022-02-22",
+        "endDay": "2022-03-05",
         "numSeats": 2,
         "available": true,
         "reviews": [

@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -28,7 +29,95 @@ public final class DataHandler extends DataConstants {
      * @param entity to save (or create) 
      */
     public static void saveEntity(BookableEntity entity) {
-        // TODO
+        String filepath = "";
+        if (entity instanceof Flight) {
+            filepath = DataConstants.FILEPATH_FLIGHTS;
+        } else if (entity instanceof RentalCar) {
+            filepath = DataConstants.FILEPATH_CARS;
+        } else if (entity instanceof HotelRoom) {
+            filepath = DataConstants.FILEPATH_HOTELS;
+        }
+
+
+    }
+
+    private static JSONObject convertToJSON(Flight flight) {
+        HashMap<String, Object> jsonFlight = new HashMap<String, Object>();
+
+        jsonFlight.put(DataConstants.ID, flight.getUUID().toString());
+        jsonFlight.put(DataConstants.NAME, flight.getName());
+        jsonFlight.put(DataConstants.FLIGHT_DEPARTURE_TIME, flight.getDepartureTime().toString());
+        jsonFlight.put(DataConstants.FLIGHT_ARRIVAL_TIME, flight.getArrivalTime().toString());
+        jsonFlight.put(DataConstants.FLIGHT_DEPARTURE_AIR, flight.getArrivalCode());
+        jsonFlight.put(DataConstants.FLIGHT_ARRIVAL_AIR, flight.getArrivalCode());
+        jsonFlight.put(DataConstants.FLIGHT_PRICE, flight.getPrice());
+    
+        boolean[][] seatMap = flight.getSeatMapRaw();
+        JSONArray jsonSeatMap = new JSONArray();
+        JSONArray jsonSeatRow;
+        for (int row = 0; row < seatMap.length; ++row) {
+            jsonSeatRow = new JSONArray();
+            for (int col = 0; col < seatMap[row].length; ++col) {
+                jsonSeatRow.set(col, seatMap[row][col]);
+            }
+            jsonSeatMap.add(jsonSeatRow);
+        }
+
+        jsonFlight.put(DataConstants.FLIGHT_SEAT_MAP, jsonSeatMap);
+
+        ArrayList<Review> reviews = flight.getReviews();
+        JSONArray jsonReviews = new JSONArray();
+        for (Review review : reviews) {
+            jsonReviews.add(DataHandler.convertToJSON(review));
+        }
+        jsonFlight.put(DataConstants.FLIGHT_REVIEWS, jsonReviews);
+
+        return new JSONObject(jsonFlight);
+    }
+
+    private static JSONObject convertToJSON(Review review) {
+        HashMap<String, Object> jsonReview = new HashMap<String, Object>();
+
+        jsonReview.put(DataConstants.REVIEW_NAME, review.getFirstName());
+        jsonReview.put(DataConstants.REVIEW_RATING, review.getRating());
+        jsonReview.put(DataConstants.REVIEW_COMMENTS, review.getComments());
+
+        return new JSONObject(jsonReview);
+    }
+
+    private static JSONObject convertToJSON(RentalCar car) {
+        HashMap<String, Object> jsonCar = new HashMap<String, Object>();
+
+        jsonCar.put(DataConstants.ID, car.getUUID().toString());
+        jsonCar.put(DataConstants.CAR_NAME, car.getName());
+        jsonCar.put(DataConstants.CAR_PRICE, car.getPrice());
+        jsonCar.put(DataConstants.CAR_STYLE, car.getStyle().toString());
+        
+        ArrayList<String> jsonFeatures = new ArrayList<String>();
+        for (CarFeature feature : car.getFeatures()) {
+            jsonFeatures.add(feature.toString());
+        }
+        jsonCar.put(DataConstants.CAR_FEATURES, jsonFeatures);
+        jsonCar.put(DataConstants.CAR_START_DAY, car.getStartDay().toString());
+        jsonCar.put(DataConstants.CAR_END_DAY, car.getEndDay().toString());
+        jsonCar.put(DataConstants.CAR_NUM_SEATS, car.getNumSeats());
+        jsonCar.put(DataConstants.AVAILABLE, car.isAvailable());
+;
+        JSONArray jsonReviews = new JSONArray();
+        for (Review review : car.getReviews()) {
+            jsonReviews.add(DataHandler.convertToJSON(review));
+        }
+        jsonCar.put(DataConstants.CAR_REVIEWS, jsonReviews);
+
+        return new JSONObject(jsonCar);
+    }
+
+    private static JSONObject convertToJSON(HotelRoom room) {
+        HashMap<String, Object> jsonHotel = new HashMap<String, Object>();
+
+
+
+        return new JSONObject(jsonHotel);
     }
 
     /**
@@ -384,7 +473,7 @@ public final class DataHandler extends DataConstants {
     private static HotelRoom parseHotelRoom(JSONObject jsonHotel) {
         UUID id = UUID.fromString( (String) jsonHotel.get(DataConstants.ID));
         String name = (String) jsonHotel.get(DataConstants.NAME);
-        double price = Double.parseDouble((String) jsonHotel.get(DataConstants.CAR_PRICE));
+        double price = (Double) jsonHotel.get(DataConstants.HOTEL_PRICE);
         boolean available = (Boolean) jsonHotel.get(AVAILABLE);
         String availabilityStart = (String) jsonHotel.get(HOTEL_AVAIL_START);
         String availabilityEnd = (String) jsonHotel.get(HOTEL_AVAIL_END);

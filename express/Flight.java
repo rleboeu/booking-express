@@ -65,10 +65,18 @@ public class Flight extends BookableEntity {
     public int getTotalSeats() { return totalSeats; }
     
     /**
+     * Returns the raw 2D boolean array of the seat map
+     * @return boolean[][]
+     */
+    public boolean[][] getSeatMapRaw() {
+        return this.seatMap;
+    }
+
+    /**
      * Returns a String representation of the seats on the flight
      * @return String
      */
-    public String getSeatMap() {
+    public String getSeatMapString() {
         StringBuffer sb = new StringBuffer();
         char a = 'A';
 

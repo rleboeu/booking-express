@@ -213,4 +213,8 @@ public class RegisteredUser extends User {
         return numFlightsCurrentYear;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
