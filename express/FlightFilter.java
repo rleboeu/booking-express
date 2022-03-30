@@ -126,4 +126,16 @@ public class FlightFilter {
      * @param review passes the review variable in
      */
     public void setReview(double review) { this.review = review; }
+
+    /**
+     * Sets the departure date
+     * @param departureDate LocalDate
+     */
+    public void setDepartureDate(LocalDate departureDate) { this.departureDate = departureDate; }
+
+    /**
+     * Sets the departure airport code
+     * @param departureDate String
+     */
+    public void setDepartureAirport(String departureAirportCode) { this.departureAirportCode = departureAirportCode;}
 }
