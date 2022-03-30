@@ -38,7 +38,49 @@ public final class DataHandler extends DataConstants {
             filepath = DataConstants.FILEPATH_HOTELS;
         }
 
+        JSONArray allItems = DataHandler.createJsonArray(filepath);
+        JSONObject givenEntity = DataHandler.convertToJSON(entity);
 
+        try {
+            FileWriter file = new FileWriter(filepath);
+
+            JSONObject potentialEntity;
+            boolean matchFound = false;
+            String potentialUUID;
+            int index;
+            for (index = 0; index < allItems.size(); ++index) {
+                potentialEntity = (JSONObject) allItems.get(index);
+                potentialUUID = (String) potentialEntity.get(DataHandler.ID);
+                if (potentialUUID.equals(entity.getUUID().toString())) {
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            if (matchFound) {
+                allItems.set(index, givenEntity);
+            } else {
+                allItems.add(givenEntity);
+            }
+
+            // Save changes by writing to the file
+            file.write(allItems.toJSONString());
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static JSONObject convertToJSON(BookableEntity entity) {
+        if (entity instanceof Flight) {
+            return DataHandler.convertToJSON((Flight) entity);
+        } else if (entity instanceof HotelRoom) {
+            return DataHandler.convertToJSON((HotelRoom) entity);
+        } else {
+            return DataHandler.convertToJSON((RentalCar) entity);
+        }
     }
 
     private static JSONObject convertToJSON(Flight flight) {
@@ -115,7 +157,20 @@ public final class DataHandler extends DataConstants {
     private static JSONObject convertToJSON(HotelRoom room) {
         HashMap<String, Object> jsonHotel = new HashMap<String, Object>();
 
-
+        jsonHotel.put(DataConstants.ID, room.getUUID().toString());
+        jsonHotel.put(DataConstants.NAME, room.getName());
+        jsonHotel.put(DataConstants.HOTEL_PRICE, room.getPrice());
+        jsonHotel.put(DataConstants.HOTEL_AVAIL_START, room.getAvailabilityStart().toString());
+        jsonHotel.put(DataConstants.HOTEL_AVAIL_END, room.getAvailabilityEnd().toString());
+        jsonHotel.put(DataConstants.HOTEL_NUM_BEDS, room.getNumBeds());
+        jsonHotel.put(DataConstants.HOTEL_NEAR_AIRPORT, room.getNearAirportCode());
+        jsonHotel.put(DataConstants.AVAILABLE, room.isAvailable());
+        
+        JSONArray jsonReviews = new JSONArray();
+        for (Review review : room.getReviews()) {
+            jsonReviews.add(DataHandler.convertToJSON(review));
+        }
+        jsonHotel.put(DataConstants.HOTEL_REVIEWS, jsonReviews);
 
         return new JSONObject(jsonHotel);
     }
