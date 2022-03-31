@@ -901,7 +901,7 @@ public class ConsoleBookingExpress {
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "9" : validInput = true;
-                    flightResultScreen(destination, hotel, arrivalDate, departureDate);
+                    HotelResultScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 default : System.out.println("Invalid input");
 
