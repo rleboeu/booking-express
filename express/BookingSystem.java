@@ -103,4 +103,14 @@ public class BookingSystem {
         }
         return flights;
     }
+
+    public ArrayList<HotelRoom> getHotels() {
+        ArrayList<HotelRoom> hotels = new ArrayList<HotelRoom>();
+        for(BookableEntity entity: availableBookings) {
+            if(entity.isAHotel) {
+                hotels.add((HotelRoom)entity);
+            }
+        }
+        return hotels;
+    }
 }

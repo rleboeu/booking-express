@@ -12,6 +12,7 @@ public abstract class BookableEntity {
     protected boolean available = true;
     protected ArrayList<Review> reviews;
     public boolean isAFlight = false;
+    public boolean isAHotel = false;
 
     /**
      * Protected constructor

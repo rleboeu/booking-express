@@ -24,6 +24,7 @@ public class HotelRoom extends BookableEntity {
         this.reviews = reviews;
         this.nearAirportCode = nearAirportCode;
         this.numBeds = numBeds;
+        isAHotel = true;
     }
 /**
  * Accessor for getting the start of availability

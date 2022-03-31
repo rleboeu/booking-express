@@ -565,7 +565,8 @@ public class ConsoleBookingExpress {
     private void printFlights(String departureCode, String arrivalAirport, LocalDate flightDate) {
         ArrayList<Flight> flights = bookingSystem.getFlights();
         for(int i = 0; i < flights.size(); i++) {
-            System.out.println(i + ". " + flights.get(i).getName());
+            System.out.println(i + ". " + flights.get(i).getName() + " Departure Time: " + flights.get(i).getDepartureTime() +
+            " Arrival Time: " + flights.get(i).getArrivalTime() + " Reviews: " + flights.get(i).getReviews());
         }
     }
 
@@ -578,8 +579,8 @@ public class ConsoleBookingExpress {
         printSeats(flight);
         System.out.println("Choose a Seat:");
         String input = reader.nextLine();
-        boolean[][] seats = flight.getSeatMapRaw();
-        seats[Integer.parseInt(input)%10][Integer.parseInt(input)%10 - Integer.parseInt(input)] = false;
+        ArrayList<ArrayList<Boolean>> seats = flight.getSeatMapRaw();
+        seats.get((Integer.parseInt(input)%10)).set(Integer.parseInt(input)%10 - Integer.parseInt(input), false);
         clear();
         mainMenu();
     }
@@ -588,13 +589,7 @@ public class ConsoleBookingExpress {
      * Prints the seats
      */
     private void printSeats(Flight flight) {
-        boolean[][] seats = flight.getSeatMapRaw();
-        for(int i = 0; i < seats.length; i++) {
-            for(int j = 0; j < seats[0].length; j++) {
-                System.out.print(i + "" + j + ". " + seats[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
+        System.out.println(flight.getSeatMapString());
     }
 
     /**
