@@ -864,11 +864,11 @@ public class ConsoleBookingExpress {
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "5" : validInput = true;
-                    hotelFilter.setSmoking(boolean.parse(enterFilterValueScreen()));
+                    hotelFilter.setSmoking(boolean.(enterFilterBoolScreen()));
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "6" : validInput = true;
-                    hotelFilter.setPool(boolean.parse(enterFilterValueScreen()));
+                    hotelFilter.setPool(boolean.(enterFilterBoolScreen()));
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "7" : validInput = true;
@@ -898,6 +898,14 @@ public class ConsoleBookingExpress {
         return input;
     }
 
+    private boolean enterFilterBoolScreen() {
+        System.out.println("********* Filter *********\n\nEnter yes or no:");
+        String input = reader.nextLine();
+        boolean ret;
+        if(input.toUpperCase() == "yes") ret = true;
+        else ret = false;
+        return ret;
+    }
     /**
      * clears the terminal, from Command Design
      */
