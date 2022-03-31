@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -38,18 +37,16 @@ public final class DataHandler extends DataConstants {
             filepath = DataConstants.FILEPATH_HOTELS;
         }
 
-        JSONArray allItems = DataHandler.createJsonArray(filepath);
-        JSONObject givenEntity = DataHandler.convertToJSON(entity);
-
         try {
-            FileWriter file = new FileWriter(filepath);
+            JSONArray jsonItems = DataHandler.createJsonArray(filepath);
+            JSONObject givenEntity = DataHandler.convertToJSON(entity);
 
             JSONObject potentialEntity;
             boolean matchFound = false;
             String potentialUUID;
             int index;
-            for (index = 0; index < allItems.size(); ++index) {
-                potentialEntity = (JSONObject) allItems.get(index);
+            for (index = 0; index < jsonItems.size(); ++index) {
+                potentialEntity = (JSONObject) jsonItems.get(index);
                 potentialUUID = (String) potentialEntity.get(DataHandler.ID);
                 if (potentialUUID.equals(entity.getUUID().toString())) {
                     matchFound = true;
@@ -58,13 +55,14 @@ public final class DataHandler extends DataConstants {
             }
 
             if (matchFound) {
-                allItems.set(index, givenEntity);
+                jsonItems.set(index, givenEntity);
             } else {
-                allItems.add(givenEntity);
+                jsonItems.add(givenEntity);
             }
 
+            FileWriter file = new FileWriter(filepath);
             // Save changes by writing to the file
-            file.write(allItems.toJSONString());
+            file.write(jsonItems.toJSONString());
             file.flush();
             file.close();
         } catch (IOException e) {
@@ -73,6 +71,11 @@ public final class DataHandler extends DataConstants {
 
     }
 
+    /**
+     * Convert BookableEntity to JSONObject
+     * @param entity BookableEntity
+     * @return JSONObject
+     */
     private static JSONObject convertToJSON(BookableEntity entity) {
         if (entity instanceof Flight) {
             return DataHandler.convertToJSON((Flight) entity);
@@ -83,6 +86,11 @@ public final class DataHandler extends DataConstants {
         }
     }
 
+    /**
+     * Convert Flight to JSONObject
+     * @param flight Flight
+     * @return JSONObject
+     */
     private static JSONObject convertToJSON(Flight flight) {
         HashMap<String, Object> jsonFlight = new HashMap<String, Object>();
 
@@ -90,18 +98,19 @@ public final class DataHandler extends DataConstants {
         jsonFlight.put(DataConstants.NAME, flight.getName());
         jsonFlight.put(DataConstants.FLIGHT_DEPARTURE_TIME, flight.getDepartureTime().toString());
         jsonFlight.put(DataConstants.FLIGHT_ARRIVAL_TIME, flight.getArrivalTime().toString());
-        jsonFlight.put(DataConstants.FLIGHT_DEPARTURE_AIR, flight.getArrivalCode());
-        jsonFlight.put(DataConstants.FLIGHT_ARRIVAL_AIR, flight.getArrivalCode());
+        jsonFlight.put(DataConstants.FLIGHT_DEPARTURE_AIR, flight.getArrivalCode().toString());
+        jsonFlight.put(DataConstants.FLIGHT_ARRIVAL_AIR, flight.getArrivalCode().toString());
         jsonFlight.put(DataConstants.FLIGHT_PRICE, flight.getPrice());
     
-        boolean[][] seatMap = flight.getSeatMapRaw();
+        ArrayList<ArrayList<Boolean>> seatMap = flight.getSeatMapRaw();
         JSONArray jsonSeatMap = new JSONArray();
         JSONArray jsonSeatRow;
-        for (int row = 0; row < seatMap.length; ++row) {
+        for (ArrayList<Boolean> row : seatMap) {
             jsonSeatRow = new JSONArray();
-            for (int col = 0; col < seatMap[row].length; ++col) {
-                jsonSeatRow.set(col, seatMap[row][col]);
+            for (Boolean col : row) {
+                jsonSeatRow.add(col);
             }
+
             jsonSeatMap.add(jsonSeatRow);
         }
 
@@ -117,6 +126,11 @@ public final class DataHandler extends DataConstants {
         return new JSONObject(jsonFlight);
     }
 
+    /**
+     * Convert Review to JSONObject
+     * @param review Review
+     * @return JSONObject
+     */
     private static JSONObject convertToJSON(Review review) {
         HashMap<String, Object> jsonReview = new HashMap<String, Object>();
 
@@ -127,6 +141,11 @@ public final class DataHandler extends DataConstants {
         return new JSONObject(jsonReview);
     }
 
+    /**
+     * Convert RentalCar to JSONObject
+     * @param car RentalCar
+     * @return JSONObject
+     */
     private static JSONObject convertToJSON(RentalCar car) {
         HashMap<String, Object> jsonCar = new HashMap<String, Object>();
 
@@ -154,6 +173,11 @@ public final class DataHandler extends DataConstants {
         return new JSONObject(jsonCar);
     }
 
+    /**
+     * Convert HotelRoom to JSONObject
+     * @param room HotelRoom
+     * @return JSONObject
+     */
     private static JSONObject convertToJSON(HotelRoom room) {
         HashMap<String, Object> jsonHotel = new HashMap<String, Object>();
 
@@ -163,7 +187,7 @@ public final class DataHandler extends DataConstants {
         jsonHotel.put(DataConstants.HOTEL_AVAIL_START, room.getAvailabilityStart().toString());
         jsonHotel.put(DataConstants.HOTEL_AVAIL_END, room.getAvailabilityEnd().toString());
         jsonHotel.put(DataConstants.HOTEL_NUM_BEDS, room.getNumBeds());
-        jsonHotel.put(DataConstants.HOTEL_NEAR_AIRPORT, room.getNearAirportCode());
+        jsonHotel.put(DataConstants.HOTEL_NEAR_AIRPORT, room.getNearAirportCode().toString());
         jsonHotel.put(DataConstants.AVAILABLE, room.isAvailable());
         
         JSONArray jsonReviews = new JSONArray();
@@ -185,7 +209,7 @@ public final class DataHandler extends DataConstants {
             JSONArray allUsers = DataHandler.createJsonArray(DataConstants.FILEPATH_USERS);
             FileWriter file = new FileWriter(DataConstants.FILEPATH_USERS);
             
-            JSONObject givenUser = DataHandler.userToJSON(user);
+            JSONObject givenUser = DataHandler.convertToJSON(user);
 
             // Attempt to find the user in the file
             JSONObject potentialUser;
@@ -224,7 +248,7 @@ public final class DataHandler extends DataConstants {
      * @param user RegisteredUser
      * @return JSONObject
      */
-    private static JSONObject userToJSON(RegisteredUser user) {
+    private static JSONObject convertToJSON(RegisteredUser user) {
         HashMap<String, Object> jsonUser = new HashMap<String, Object>();
 
         jsonUser.put(DataConstants.FIRST_NAME, user.getFirstName());
@@ -333,7 +357,9 @@ public final class DataHandler extends DataConstants {
     private static JSONArray createJsonArray(String filepath) {
         JSONArray array = null;
         try {
-            array = (JSONArray) DataHandler.parser.parse(new FileReader(filepath));
+            FileReader reader = new FileReader(filepath);
+            array = (JSONArray) DataHandler.parser.parse(reader);
+            reader.close();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -349,7 +375,7 @@ public final class DataHandler extends DataConstants {
     private static Flight parseFlight(JSONObject jsonFlight) {
         String jsonUUID = (String) jsonFlight.get(DataConstants.ID);
         String jsonName = (String) jsonFlight.get(DataConstants.NAME);
-        boolean jsonAvailable = (Boolean) jsonFlight.get(DataConstants.AVAILABLE);
+        //boolean jsonAvailable = (Boolean) jsonFlight.get(DataConstants.AVAILABLE);
         String jsonDepTime = (String) jsonFlight.get(DataConstants.FLIGHT_DEPARTURE_TIME);
         String jsonArrTime = (String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_TIME);
         Airport jsonArrivalAir = Airport.valueOf((String) jsonFlight.get(DataConstants.FLIGHT_ARRIVAL_AIR));
@@ -359,21 +385,18 @@ public final class DataHandler extends DataConstants {
         JSONArray jsonReviews = (JSONArray) jsonFlight.get(DataConstants.FLIGHT_REVIEWS);
 
         // convert seatMap to boolean[][]
-        boolean[][] seatMap = null;
+        ArrayList<ArrayList<Boolean>> seatMap = new ArrayList<ArrayList<Boolean>>();
         JSONArray row;
-        int rowIndex = 0;
+        ArrayList<Boolean> lstRow = new ArrayList<Boolean>();
         for (Object obj : jsonSeatMap) {    // for each row of the JSONArray
             row = (JSONArray) obj;
-            if (rowIndex == 0) {
-                seatMap = new boolean[jsonSeatMap.size()][row.size()];
-            }
 
             // for each column in row
-            for (int columnIndex = 0; columnIndex < row.size(); ++columnIndex) {
-                seatMap[rowIndex][columnIndex] = (Boolean)row.get(columnIndex);
+            for (Object obj2 : row) {
+                lstRow.add((Boolean)obj2);
             }
 
-            rowIndex++;
+            seatMap.add(lstRow);
         }
 
         // add reviews to arraylist
@@ -385,7 +408,7 @@ public final class DataHandler extends DataConstants {
         }
 
         // create the flight from the loaded data
-        return new Flight(UUID.fromString(jsonUUID), jsonName, jsonPrice, jsonAvailable, jsonDepTime, jsonArrTime, jsonDepartAir, jsonArrivalAir, seatMap, reviews);
+        return new Flight(UUID.fromString(jsonUUID), jsonName, jsonPrice, true, jsonDepTime, jsonArrTime, jsonDepartAir, jsonArrivalAir, seatMap, reviews);
     }
 
     /**

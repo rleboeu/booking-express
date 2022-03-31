@@ -16,7 +16,7 @@ public class Flight extends BookableEntity {
     private Airport departureAirport;
     private Airport arrivalAirport;
     private int totalSeats;
-    private boolean[][] seatMap;
+    private ArrayList<ArrayList<Boolean>> seatMap;
 
     /**
      * Flight constructor
@@ -28,7 +28,7 @@ public class Flight extends BookableEntity {
      * @param seatMap boolean[][]
      * @param reviews ArrayList<Review>
      */
-    public Flight(UUID uuid, String name, double price, boolean available, String departureTime, String arrivalTime, Airport departureAirport, Airport arrivalAirport, boolean[][] seatMap, ArrayList<Review> reviews) {
+    public Flight(UUID uuid, String name, double price, boolean available, String departureTime, String arrivalTime, Airport departureAirport, Airport arrivalAirport, ArrayList<ArrayList<Boolean>> seatMap, ArrayList<Review> reviews) {
         super(uuid, name, price, available, reviews);
 
         this.departureTime = LocalTime.parse(departureTime);
@@ -68,7 +68,7 @@ public class Flight extends BookableEntity {
      * Returns the raw 2D boolean array of the seat map
      * @return boolean[][]
      */
-    public boolean[][] getSeatMapRaw() {
+    public ArrayList<ArrayList<Boolean>> getSeatMapRaw() {
         return this.seatMap;
     }
 
@@ -80,11 +80,11 @@ public class Flight extends BookableEntity {
         StringBuffer sb = new StringBuffer();
         char a = 'A';
 
-        for (int row = 0; row < this.seatMap.length; ++row) {
-            for (int col = 0; col < this.seatMap[row].length; ++col) {
+        for (int row = 0; row < this.seatMap.size(); ++row) {
+            for (int col = 0; col < this.seatMap.get(row).size(); ++col) {
                 sb.append(a + row); // seat letter
                 sb.append(col + ":");     // seat number
-                sb.append(this.seatMap[row][col] + " ");
+                sb.append(this.seatMap.get(row).get(col) + " ");
             }
 
             sb.append("\n");
