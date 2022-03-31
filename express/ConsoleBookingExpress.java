@@ -864,11 +864,11 @@ public class ConsoleBookingExpress {
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "5" : validInput = true;
-                    hotelFilter.setSmoking(boolean.(enterFilterBoolScreen()));
+                    hotelFilter.setSmoking(enterFilterBoolScreen());
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "6" : validInput = true;
-                    hotelFilter.setPool(boolean.(enterFilterBoolScreen()));
+                    hotelFilter.setPool(enterFilterBoolScreen());
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "7" : validInput = true;
