@@ -102,6 +102,7 @@ public class ConsoleBookingExpress {
                     searchFlightScreen();
                     break;
                 case "2": validInput = true;
+                    searchHotelScreen();
                     break;
                 case "3": validInput = true;
                     break;
