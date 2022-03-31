@@ -838,6 +838,8 @@ public class ConsoleBookingExpress {
     private void printHotels(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
         ArrayList<HotelRoom> hotels = bookingSystem.getHotels();
         for(int i = 0; i < hotels.size(); i++) {
+            hotels.get(i).setAvailabilityStart(arrivalDate);
+            hotels.get(i).setAvailabilityEnd(departureDate);
             System.out.println(i + ". " + hotels.get(i).getName() + " Departure Time: " + hotels.get(i).getAvailabilityEnd() +
             " Arrival Time: " + hotels.get(i).getAvailabilityStart() + " Reviews: " + hotels.get(i).getReviews());
         }
