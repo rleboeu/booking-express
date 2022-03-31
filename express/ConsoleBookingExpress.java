@@ -810,14 +810,59 @@ public class ConsoleBookingExpress {
         readHotelFilter(destination, hotel, arrivalDate, departureDate);
     }
 
+
     /**
-     * Prints all the flights
+     * Reads the users inputs from flight results
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param departureDate LocalDate
+     */
+    private void readHotelResults(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+        boolean validInput = false;
+        ArrayList<Flight> flights = bookingSystem.getFlights();
+        while(!validInput) {
+            String input = reader.nextLine();
+            switch(input) {
+                case "y" : validInput = true;
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
+                    break;
+                case "done" : case "Done" : case "DONE" : validInput = true;
+                    clear();
+                    mainMenu();
+                    break;
+                case "0" : validInput = true;
+                    registeredUser.addBooking(flights.get(0));
+                    chooseSeatScreen(flights.get(0));
+                    break;
+                case "1" : validInput = true;
+                    registeredUser.addBooking(flights.get(1));
+                    chooseSeatScreen(flights.get(1));
+                    break;
+                case "2" : validInput = true;
+                    registeredUser.addBooking(flights.get(2));
+                    chooseSeatScreen(flights.get(2));
+                    break;
+                case "3" : validInput = true;
+                    registeredUser.addBooking(flights.get(3));
+                    chooseSeatScreen(flights.get(3));
+                    break;
+                default : System.out.println("Invalid input");
+            }
+        }
+    }
+
+    /**
+     * Prints all the hotels
      * @param departureCode String
      * @param arrivalAirport String
      * @param flightDate LocalDate
      */
     private void printHotels(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
-
+        ArrayList<HotelRoom> hotels = bookingSystem.getHotels();
+        for(int i = 0; i < hotels.size(); i++) {
+            System.out.println(i + ". " + hotels.get(i).getName() + " Departure Time: " + hotels.get(i).getAvailabilityEnd() +
+            " Arrival Time: " + hotels.get(i).getAvailabilityStart() + " Reviews: " + hotels.get(i).getReviews());
+        }
     }
 
     /**
