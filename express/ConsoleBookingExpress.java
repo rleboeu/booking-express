@@ -19,6 +19,8 @@ public class ConsoleBookingExpress {
     private Scanner reader;
     private HashMap<String, String> inputs;
     private ArrayList<BookableEntity> bookableEntities;
+    private HotelFilter hotelFilter;
+    private ArrayList<String> hotels;
     private FlightFilter flightFilter;
     private ArrayList<String> airlines;
 
@@ -654,6 +656,217 @@ public class ConsoleBookingExpress {
         }
     }
 
+    /**
+     * The user inputs their destination
+     */
+    private void searchHotelScreen() {
+        clear();
+        System.out.println("***** Search Hotel ******\n\nDestination:");
+        String input = reader.nextLine();
+        HotelResultsScreen(input);
+    }
+
+    /**
+     * Lists hotels near the users destination and allows them to select one
+     * @param destination String code for the destination airport
+     */
+    private void HotelResultsScreen(String destination) {
+        clear();
+        System.out.println("***** Search Hotel ******\n\nLocal Hotels :");
+        printLocalHotels();
+        System.out.println("Enter Name of hotel or select option from above:");
+        String input = reader.nextLine();
+        dateOfArrivalScreen(destination, input);
+    }
+
+    /**
+     * The user inputs the date they wish to Arrive
+     * @param departureCode String
+     * @param arrivalAirport String
+     */
+    private void dateOfArrivalScreen(String destination, String hotel) {
+        clear();
+        System.out.println("***** Search Hotel ******\n\nDate of Arrival (mm/dd/yyyy):");
+        String input = reader.nextLine();
+        String[] inputs = input.split("/");
+        int month = 0;
+        int day = 0;
+        int year = 0;
+        try {
+            month = Integer.parseInt(inputs[0]);
+            day = Integer.parseInt(inputs[1]);
+            year = Integer.parseInt(inputs[2]);
+        }
+        catch (NumberFormatException e) {
+            dateOfArrivalScreen(destination, hotel);
+
+        }
+        LocalDate arrivalDate = LocalDate.of(year, month, day);
+        dateOfDepartureScreen(destination, hotel, arrivalDate);
+    }
+
+    /**
+     * The user inputs the date they wish to fly
+     * @param departureCode String
+     * @param arrivalAirport String
+     */
+    private void dateOfDepartureScreen(String destination, String hotel, LocalDate arrivalDate) {
+        clear();
+        System.out.println("***** Search Hotel ******\n\nDate of Departure (mm/dd/yyyy):");
+        String input = reader.nextLine();
+        String[] inputs = input.split("/");
+        int month = 0;
+        int day = 0;
+        int year = 0;
+        try {
+            month = Integer.parseInt(inputs[0]);
+            day = Integer.parseInt(inputs[1]);
+            year = Integer.parseInt(inputs[2]);
+        }
+        catch (NumberFormatException e) {
+            dateOfDepartureScreen(destination, hotel, arrivalDate);
+
+        }
+        LocalDate departureDate = LocalDate.of(year, month, day);
+        HotelResultScreen(destination, hotel, arrivalDate, departureDate);
+    }
+
+    /**
+     * Results for departing flights
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param departureDate LocalDate
+     */
+    private void HotelResultScreen(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+        clear();
+        System.out.println("********* Flight *********\n");
+        printHotels(destination, hotel, arrivalDate, departureDate);
+        System.out.println("Add Filter? (y)\nDone? (done)\nChoose a Flight:");
+        readHotelResults(destination, hotel, arrivalDate, departureDate);
+    }
+
+    /**
+     * Reads the users inputs from flight results
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param departureDate LocalDate
+     */
+    private void readHotelResults(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+        boolean validInput = false;
+        while(!validInput) {
+            String input = reader.nextLine();
+            switch(input) {
+                case "y" : validInput = true;
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
+                    break;
+                case "done" : case "Done" : case "DONE" : validInput = true;
+                    chooseSeatScreen();
+                    break;
+                default : System.out.println("Invalid input");
+            }
+        }
+    }
+
+    /**
+     * Shows the filters for the flights
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param departureDate LocalDate
+     */
+    private void filterScreen(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+        clear();
+        System.out.println("********* Filter *********\n\nFilters:");
+        addHotelFilters();
+        for(String option: options) {
+            System.out.println(option);
+        }
+        System.out.println("\nEnter Option:");
+        readHotelFilter(destination, hotel, arrivalDate, departureDate);
+    }
+
+    /**
+     * Prints all the flights
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param flightDate LocalDate
+     */
+    private void printHotels(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+
+    }
+
+    /**
+     * Adds all the filter options to options ArrayList<String>
+     */
+    private void addHotelFilters() {
+        options.clear();
+        options.add("1. Departure Date");
+        options.add("2. Arrival Date");
+        options.add("3. Hotel Max Price");
+        options.add("4. Pool");
+        options.add("5. Smoking");
+        options.add("6. One Bed");
+        options.add("7. Two Bed");
+        options.add("8. Hotel");
+        options.add("9. Rating");
+        options.add("10. Done");
+    }
+
+    /**
+     * Reads the users input from the filter screen
+     * @param departureCode String
+     * @param arrivalAirport String
+     * @param departureDate LocalDate
+     */
+    private void readHotelFilter(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
+        boolean validInput = false;
+        while(!validInput) {
+            String input = reader.nextLine();
+            switch(input) {
+                case "1" : validInput = true;
+                    hotelFilter.setArrivalDate(arrivalDate);
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "2" : validInput = true;
+                    hotelFilter.setDepartureDate(departureDate);
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "3" : validInput = true;
+                    hotelFilter.setFlightPriceMax(Double.parseDouble(enterFilterValueScreen()));
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "4" :validInput = true;
+                    hotelFilter.setNumberOfLayovers(Integer.parseInt(enterFilterValueScreen()));
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "5" : validInput = true;
+                    hotelFilter.setTotalLayoverTime(Integer.parseInt(enterFilterValueScreen()));
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "6" : validInput = true;
+                    hotelFilter.setTotalFlightTime(Integer.parseInt(enterFilterValueScreen()));
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "7" : validInput = true;
+                    hotelFilter.setSeatType(enterFilterValueScreen());
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "8" : validInput = true;
+                    airlines.add(enterFilterValueScreen());
+                    hotelFilter.setAirline(airlines);
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "9" : validInput = true;
+                    hotelFilter.setReview(Double.parseDouble(enterFilterValueScreen()));
+                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                case "10" : validInput = true;
+                    flightResultScreen(departureCode, arrivalAirport, departureDate);
+                    break;
+                default : System.out.println("Invalid input");
+
+            }
+        }
+    }
     /**
      * Allows the user input a value for the filter
      * @return String of the users input
