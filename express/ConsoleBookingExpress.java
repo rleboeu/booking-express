@@ -23,6 +23,7 @@ public class ConsoleBookingExpress {
     private ArrayList<String> hotels;
     private FlightFilter flightFilter;
     private ArrayList<String> airlines;
+    private BookingSystem bookingSystem;
 
     /**
      * Constructer
@@ -35,7 +36,8 @@ public class ConsoleBookingExpress {
         options = new ArrayList<String>(); 
         reader = new Scanner(System.in);
         flightFilter = new FlightFilter();
-        //bookableEntities = DataHandler.loadEntities();
+        bookableEntities = DataHandler.loadEntities();
+        bookingSystem = new BookingSystem(bookableEntities);
     }
 
     /**
@@ -235,6 +237,7 @@ public class ConsoleBookingExpress {
                         registeredUser = user.createAccoutn(inputs.get("1. First Name"), inputs.get("2. Last Name"), 
                             ageInYears);
                         fillOutPassport(inputs);
+                        DataHandler.saveUser(registeredUser);
                         clear();
                         mainMenu();
                     }
@@ -401,7 +404,7 @@ public class ConsoleBookingExpress {
      * prints a list of airports
      */
     private void printLocalAirports() {
-
+        
     }
 
     /**
@@ -521,6 +524,7 @@ public class ConsoleBookingExpress {
      */
     private void readFlightResults(String departureCode, String arrivalAirport, LocalDate departureDate) {
         boolean validInput = false;
+        ArrayList<Flight> flights = bookingSystem.getFlights();
         while(!validInput) {
             String input = reader.nextLine();
             switch(input) {
@@ -528,7 +532,24 @@ public class ConsoleBookingExpress {
                     filterScreen(departureCode, arrivalAirport, departureDate);
                     break;
                 case "done" : case "Done" : case "DONE" : validInput = true;
-                    chooseSeatScreen();
+                    clear();
+                    mainMenu();
+                    break;
+                case "0" : validInput = true;
+                    registeredUser.addBooking(flights.get(0));
+                    chooseSeatScreen(flights.get(0));
+                    break;
+                case "1" : validInput = true;
+                    registeredUser.addBooking(flights.get(1));
+                    chooseSeatScreen(flights.get(1));
+                    break;
+                case "2" : validInput = true;
+                    registeredUser.addBooking(flights.get(2));
+                    chooseSeatScreen(flights.get(2));
+                    break;
+                case "3" : validInput = true;
+                    registeredUser.addBooking(flights.get(3));
+                    chooseSeatScreen(flights.get(3));
                     break;
                 default : System.out.println("Invalid input");
             }
@@ -542,18 +563,23 @@ public class ConsoleBookingExpress {
      * @param flightDate LocalDate
      */
     private void printFlights(String departureCode, String arrivalAirport, LocalDate flightDate) {
-
+        ArrayList<Flight> flights = bookingSystem.getFlights();
+        for(int i = 0; i < flights.size(); i++) {
+            System.out.println(i + ". " + flights.get(i).getName());
+        }
     }
 
     /**
      * Lets the user choose a seat on the flight and books the flight
      */
-    private void chooseSeatScreen() {
+    private void chooseSeatScreen(Flight flight) {
         clear();
         System.out.println("********* Flight *********\n");
-        printSeats();
+        printSeats(flight);
         System.out.println("Choose a Seat:");
         String input = reader.nextLine();
+        boolean[][] seats = flight.getSeatMapRaw();
+        seats[Integer.parseInt(input)%10][Integer.parseInt(input)%10 - Integer.parseInt(input)] = false;
         clear();
         mainMenu();
     }
@@ -561,8 +587,14 @@ public class ConsoleBookingExpress {
     /**
      * Prints the seats
      */
-    private void printSeats() {
-
+    private void printSeats(Flight flight) {
+        boolean[][] seats = flight.getSeatMapRaw();
+        for(int i = 0; i < seats.length; i++) {
+            for(int j = 0; j < seats[0].length; j++) {
+                System.out.print(i + "" + j + ". " + seats[i][j] + " ");
+            }
+            System.out.print("\n");
+        }
     }
 
     /**
@@ -673,7 +705,8 @@ public class ConsoleBookingExpress {
     private void HotelResultsScreen(String destination) {
         clear();
         System.out.println("***** Search Hotel ******\n\nLocal Hotels :");
-        System.out.println("Enter Name of hotel:");
+        //printLocalHotels();
+        System.out.println("Enter Name of hotel or select option from above:");
         String input = reader.nextLine();
         dateOfArrivalScreen(destination, input);
     }
@@ -759,7 +792,6 @@ public class ConsoleBookingExpress {
                     filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "done" : case "Done" : case "DONE" : validInput = true;
-                    chooseSeatScreen();
                     break;
                 default : System.out.println("Invalid input");
             }

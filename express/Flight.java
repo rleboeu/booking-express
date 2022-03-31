@@ -36,6 +36,7 @@ public class Flight extends BookableEntity {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.seatMap = seatMap;
+        isAFlight = true;
     }
 
     /**

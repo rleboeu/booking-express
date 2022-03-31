@@ -1,6 +1,7 @@
 package express;
 import java.util.*;
 
+import javax.swing.text.html.parser.Entity;
 /**
  * Class for bookingSystem adding, removing, etc
  * @author Andrew Garcia, Ryan LeBoeuf
@@ -14,6 +15,14 @@ public class BookingSystem {
      */
     public BookingSystem() {
         this.availableBookings = new ArrayList<BookableEntity>();
+        this.bookingAgencies = new ArrayList<BookingAgency>();
+    }
+
+    /**
+     * Constructor
+     */
+    public BookingSystem(ArrayList<BookableEntity> bookableEntities) {
+        this.availableBookings = bookableEntities;
         this.bookingAgencies = new ArrayList<BookingAgency>();
     }
 
@@ -82,5 +91,15 @@ public class BookingSystem {
             DataHandler.saveEntity(entity);
             DataHandler.saveUser(user);
         }
+    }
+
+    public ArrayList<Flight> getFlights() {
+        ArrayList<Flight> flights = new ArrayList<Flight>();
+        for(BookableEntity entity: availableBookings) {
+            if(entity.isAFlight) {
+                flights.add((Flight)entity);
+            }
+        }
+        return flights;
     }
 }
