@@ -673,8 +673,7 @@ public class ConsoleBookingExpress {
     private void HotelResultsScreen(String destination) {
         clear();
         System.out.println("***** Search Hotel ******\n\nLocal Hotels :");
-        printLocalHotels();
-        System.out.println("Enter Name of hotel or select option from above:");
+        System.out.println("Enter Name of hotel:");
         String input = reader.nextLine();
         dateOfArrivalScreen(destination, input);
     }
@@ -739,9 +738,9 @@ public class ConsoleBookingExpress {
      */
     private void HotelResultScreen(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
         clear();
-        System.out.println("********* Flight *********\n");
+        System.out.println("********* Hotel *********\n");
         printHotels(destination, hotel, arrivalDate, departureDate);
-        System.out.println("Add Filter? (y)\nDone? (done)\nChoose a Flight:");
+        System.out.println("Add Filter? (y)\nDone? (done)\nChoose a Hotel:");
         readHotelResults(destination, hotel, arrivalDate, departureDate);
     }
 
@@ -802,13 +801,12 @@ public class ConsoleBookingExpress {
         options.add("1. Departure Date");
         options.add("2. Arrival Date");
         options.add("3. Hotel Max Price");
-        options.add("4. Pool");
+        options.add("4. Number of Beds");
         options.add("5. Smoking");
-        options.add("6. One Bed");
-        options.add("7. Two Bed");
-        options.add("8. Hotel");
-        options.add("9. Rating");
-        options.add("10. Done");
+        options.add("6. Pool");
+        options.add("7. Hotel");
+        options.add("8. Rating");
+        options.add("9. Done");
     }
 
     /**
@@ -824,43 +822,39 @@ public class ConsoleBookingExpress {
             switch(input) {
                 case "1" : validInput = true;
                     hotelFilter.setArrivalDate(arrivalDate);
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "2" : validInput = true;
                     hotelFilter.setDepartureDate(departureDate);
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "3" : validInput = true;
-                    hotelFilter.setFlightPriceMax(Double.parseDouble(enterFilterValueScreen()));
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotelFilter.setHotelPriceMax(Double.parseDouble(enterFilterValueScreen()));
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "4" :validInput = true;
-                    hotelFilter.setNumberOfLayovers(Integer.parseInt(enterFilterValueScreen()));
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotelFilter.setNumBeds(Integer.parseInt(enterFilterValueScreen()));
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "5" : validInput = true;
-                    hotelFilter.setTotalLayoverTime(Integer.parseInt(enterFilterValueScreen()));
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotelFilter.setSmoking(boolean.parse(enterFilterValueScreen()));
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "6" : validInput = true;
-                    hotelFilter.setTotalFlightTime(Integer.parseInt(enterFilterValueScreen()));
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotelFilter.setPool(boolean.parse(enterFilterValueScreen()));
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "7" : validInput = true;
-                    hotelFilter.setSeatType(enterFilterValueScreen());
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotels.add(enterFilterValueScreen());
+                    hotelFilter.setHotels(hotels);
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "8" : validInput = true;
-                    airlines.add(enterFilterValueScreen());
-                    hotelFilter.setAirline(airlines);
-                    filterScreen(departureCode, arrivalAirport, departureDate);
+                    hotelFilter.setReview(Double.parseDouble(enterFilterValueScreen()));
+                    filterScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 case "9" : validInput = true;
-                    hotelFilter.setReview(Double.parseDouble(enterFilterValueScreen()));
-                    filterScreen(departureCode, arrivalAirport, departureDate);
-                    break;
-                case "10" : validInput = true;
-                    flightResultScreen(departureCode, arrivalAirport, departureDate);
+                    flightResultScreen(destination, hotel, arrivalDate, departureDate);
                     break;
                 default : System.out.println("Invalid input");
 
