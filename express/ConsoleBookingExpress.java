@@ -812,6 +812,8 @@ public class ConsoleBookingExpress {
                     break;
                 case "0" : validInput = true;
                     registeredUser.addBooking(hotels.get(0));
+                    clear();
+                    mainMenu();
                     break;
                 case "1" : validInput = true;
                     registeredUser.addBooking(hotels.get(1));
