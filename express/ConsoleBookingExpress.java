@@ -773,27 +773,6 @@ public class ConsoleBookingExpress {
     }
 
     /**
-     * Reads the users inputs from flight results
-     * @param departureCode String
-     * @param arrivalAirport String
-     * @param departureDate LocalDate
-     */
-    private void readHotelResults(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
-        boolean validInput = false;
-        while(!validInput) {
-            String input = reader.nextLine();
-            switch(input) {
-                case "y" : validInput = true;
-                    filterScreen(destination, hotel, arrivalDate, departureDate);
-                    break;
-                case "done" : case "Done" : case "DONE" : validInput = true;
-                    break;
-                default : System.out.println("Invalid input");
-            }
-        }
-    }
-
-    /**
      * Shows the filters for the flights
      * @param departureCode String
      * @param arrivalAirport String
@@ -819,7 +798,7 @@ public class ConsoleBookingExpress {
      */
     private void readHotelResults(String destination, String hotel, LocalDate arrivalDate, LocalDate departureDate) {
         boolean validInput = false;
-        ArrayList<Flight> flights = bookingSystem.getFlights();
+        ArrayList<HotelRoom> hotels = bookingSystem.getHotels();
         while(!validInput) {
             String input = reader.nextLine();
             switch(input) {
@@ -831,20 +810,16 @@ public class ConsoleBookingExpress {
                     mainMenu();
                     break;
                 case "0" : validInput = true;
-                    registeredUser.addBooking(flights.get(0));
-                    chooseSeatScreen(flights.get(0));
+                    registeredUser.addBooking(hotels.get(0));
                     break;
                 case "1" : validInput = true;
-                    registeredUser.addBooking(flights.get(1));
-                    chooseSeatScreen(flights.get(1));
+                    registeredUser.addBooking(hotels.get(1));
                     break;
                 case "2" : validInput = true;
-                    registeredUser.addBooking(flights.get(2));
-                    chooseSeatScreen(flights.get(2));
+                    registeredUser.addBooking(hotels.get(2));
                     break;
                 case "3" : validInput = true;
-                    registeredUser.addBooking(flights.get(3));
-                    chooseSeatScreen(flights.get(3));
+                    registeredUser.addBooking(hotels.get(3));
                     break;
                 default : System.out.println("Invalid input");
             }
