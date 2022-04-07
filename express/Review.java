@@ -2,7 +2,7 @@
  * Class for reviews on bookableEntities
  * @author Andrew Garcia
  */
-package express;
+// package express;
 
 public class Review {
     private double rating;
