@@ -164,8 +164,8 @@ public class ConsoleBookingExpress {
     }
 
     /**
-     * fills a hasmap with the options strings as the keys and an empty string as the value, 
-     * exept the last value which has done as its value
+     * fills a hashmap with the options strings as the keys and an empty string as the value, 
+     * except the last value which has done as its value
      * @return HashMap<String, String>
      */
     private HashMap<String, String> fillHashmap() {
