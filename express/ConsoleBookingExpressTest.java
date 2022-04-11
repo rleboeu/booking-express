@@ -46,12 +46,12 @@ private Scanner reader;
     @Test
     
     public void testMainMenuOut(){
-        /*
+        
         System.out.println("******* Main Menu ********\n");
         assertEquals("******* Main Menu ********\n", outContent.toString());
         System.out.println("What would you like to do?\n");
         assertEquals("What would you like to do?\n", errContent.toString());
-        */
+        
     }
     @Test
     public void testMainMenuErr(){
@@ -115,7 +115,25 @@ private Scanner reader;
         System.out.println("What would you like to do?\n");
         readCreateAccountInput(inputs);
     }
-
+    @Test
+    public void testFillHashmap(){
+        HashMap<String,String> input = new HashMap<String, String>();
+        for(String option: options) {
+            input.put(option, "");
+        }
+        input.put(options.get(9), "Done");
+        input.put(options.get(10), "Exit");
+        return;
+    }
+    @Test
+    public void testPrintOptionsWithHashMap(HashMap<String, String> input){
+        for(int i = 0; i < options.size() - 2; i++) {
+            System.out.println(options.get(i) + ": " + input.get(options.get(i)));
+        }
+        System.out.println(options.get(8));
+        System.out.println(options.get(9));
+        System.out.println("\n");
+    }
     private void readCreateAccountInput(ConsoleBookingExpressTest inputs) {
     }
 
