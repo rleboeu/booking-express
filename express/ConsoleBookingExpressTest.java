@@ -2,7 +2,7 @@
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.junit.Assert.assertArrayEquals;
 /**
- * @author Thomas Ferguson
+ * @author Thomas Ferguson, Andrew Garcia
  */
 import static org.junit.Assert.assertEquals;
 
@@ -42,9 +42,15 @@ private Scanner reader;
         System.setOut(originalOut);
         System.setErr(originalErr);
     }
+    @Test
+    public void testBookingHistoryOptions() {
+        ArrayList<String> bookings = new ArrayList<String>();
+        ArrayList<String> expected = bookings;
+        ArrayList<String> actual = ConsoleBookingExpress.bookingHistoryOptions();
+        assertEquals(expected, actual);
+    }
 
     @Test
-    
     public void testMainMenuOut(){
         
         System.out.println("******* Main Menu ********\n");
@@ -135,9 +141,11 @@ private Scanner reader;
         System.out.println("\n");
     }
     private void readCreateAccountInput(ConsoleBookingExpressTest inputs) {
+
     }
 
     private void printOptionsWithHashMap(ConsoleBookingExpressTest inputs) {
+
     }
 
     private ConsoleBookingExpressTest fillHashmap() {
@@ -167,6 +175,6 @@ private Scanner reader;
 
     private void searchFlightScreen() {
     }
-
+    
 }
 

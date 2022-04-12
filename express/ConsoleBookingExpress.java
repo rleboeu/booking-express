@@ -15,7 +15,7 @@ public class ConsoleBookingExpress {
     private static ConsoleBookingExpress consoleBookingExpress;
     private ArrayList<String> options;
     private User user;
-    private RegisteredUser registeredUser;
+    private static RegisteredUser registeredUser;
     private Scanner reader;
     private HashMap<String, String> inputs;
     private ArrayList<BookableEntity> bookableEntities;
@@ -344,7 +344,7 @@ public class ConsoleBookingExpress {
      * fills out an ArrayList with the name of all the user's bookings
      * @return ArrayList<String>
      */
-    private ArrayList<String> bookingHistoryOptions() {
+    public static ArrayList<String> bookingHistoryOptions() {
         ArrayList<String> bookings = new ArrayList<String>();
         for(int i = 0; i < registeredUser.getBookingHistory().size(); i++) {
             bookings.add(registeredUser.getBookingHistory().get(i).getName());

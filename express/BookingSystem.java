@@ -65,7 +65,7 @@ public class BookingSystem {
      * @param entity to reserve for the user
      * @return boolean is successfull in booking
      */
-    public boolean reserveBooking(RegisteredUser user, BookableEntity entity) {
+    public static boolean reserveBooking(RegisteredUser user, BookableEntity entity) {
         if (entity.isAvailable()) {
             entity.reserve();   // modify the entity
             user.addBooking(entity);    // modifty the user
@@ -84,13 +84,16 @@ public class BookingSystem {
      * @param user that reserved the entity
      * @param entity that was reserved
      */
-    public void cancelBooking(RegisteredUser user, BookableEntity entity) {
+    public static boolean cancelBooking(RegisteredUser user, BookableEntity entity) {
         if (!entity.isAvailable()) {
             entity.cancelReserve();
             user.removeBooking(entity);
 
             DataHandler.saveEntity(entity);
             DataHandler.saveUser(user);
+            return true;
+        } else {
+            return false;
         }
     }
 

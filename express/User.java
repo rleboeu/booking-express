@@ -24,7 +24,8 @@ public class User {
      * @param dob String date of birth
      * @return The RegisteredUser account
      */
-    public RegisteredUser createAccoutn(String name, String lastName, int age) {
+    public static RegisteredUser createAccoutn(String name, String lastName, int age) {
+        String location = "";
         return new RegisteredUser(name,lastName, age, location);
     }
     
